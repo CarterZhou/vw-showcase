@@ -1,3 +1,11 @@
+/*
+ * Author : Hao Zhou
+ * Date : 19/01/2013
+ * 
+ * This script is dedicated to presenting UI as well as to handling AJAX request
+ * on page fastBREAK showcase. 
+ * http://vibewire.org/fastbreak-showcase/
+ */
 jQuery(document).ready(function($) {
 
 	    $('div#ileLoader-523826').empty();
