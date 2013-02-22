@@ -1,0 +1,399 @@
+/*
+ *	Author:         Hao Zhou
+ *	Template:       new_vibewire_site
+ * 	Version:        1.0
+*/
+
+/* Code added on 14/01/2013 by Hao Zhou -- START */
+
+div#s_wrapper {
+	width:940px;
+	margin-left:10px;
+	margin-right:10px;
+	background: white;
+}
+
+div.s_subject_item label {
+	margin-bottom: 5px;
+}
+	
+div#s_sidebar {
+	background: none;
+	padding: 0;
+	margin-top:10px;
+	float: left;
+	display: inline;
+	width: 190px;
+	height: 400px;
+	color:black;
+	font-family: 'Open Sans',sans-serif;
+}
+
+div#welcome {
+	margin-top:25px;
+	margin-left:20px;
+	position:absolute;
+	font-family: 'Open Sans',sans-serif;
+}
+
+div#welcome p {
+	font-size: 15px;
+	text-align:justify;
+}
+
+div.s_subject_item {
+	margin-left:10px;
+	margin-top:45px;
+}
+
+div.s_subject_item > label {
+	font-size:18px;
+}
+
+ul.s_subjects {
+	list-style: none;
+	padding:0px;
+}
+
+ul.s_subjects li input[type="radio"] {
+	position: absolute;
+	left: -999px;
+}
+
+ul.s_subjects li label {
+	font-size:15px;
+	font-weight: normal;
+	display: inline;
+}
+
+ul.s_subjects li {
+	float: none;
+	display: list-item;
+	width: auto;
+	padding: 5px;
+}
+
+.subject_normal {
+	background: url("http://vibewire.org/wp-content/uploads/2013/01/icon_filter.gif") left no-repeat;
+	padding-left: 16px;
+}
+
+.subject_hover {
+	background: url("http://vibewire.org/wp-content/uploads/2013/01/check.png") left no-repeat;
+	color:#2F94C8;
+	font-weight:bold;
+	cursor: pointer;
+}
+
+ul.s_subjects li input[type="radio"]:checked + label{
+	background: url("http://vibewire.org/wp-content/uploads/2013/01/check.png") left no-repeat;
+	color:#2F94C8;
+	font-weight:bold;
+	cursor: pointer;
+}
+
+ul.s_subjects li input[type="radio"] {
+	top: 0;
+}
+
+div#s_video_area {
+	min-height: 500px;
+	width: 720px;
+	left: 15px;
+	position: relative;
+	margin-top:10px;
+        overflow:hidden;
+	font-family: 'Open Sans',sans-serif;
+}
+
+div#s_video_subject {
+	left:0px;
+	top:0px;
+	height:50px;
+	text-align:center;
+	font-size: 30px;
+	font-weight:bold;
+	border:0;
+}
+
+div#s_vid_img {
+	display:inline;
+}
+
+div#s_vid_sub {
+	position:relative;
+	top:-15px;
+	display:inline;
+}
+
+div.s_video {
+	position: absolute;
+	font-size:15px;
+	font-weight:bold;
+}
+
+div.s_speaker {
+	margin-bottom:0;
+}
+div.idea_img {
+	float:left;
+}
+
+div.s_vid_content{
+	position:relative;
+	top:-10px
+}
+
+.loading_img {
+	position:relative;
+	left:100px;
+	top:20px;
+	width:64px;
+	height:64px;
+	background: url('http://vibewire.org/wp-content/uploads/2013/02/loading-showcase.gif');
+	
+}
+
+/* Code added on 14/01/2013 by Hao Zhou -- END */
+
+/* Code added on 24/01/2013 by Hao Zhou -- START */
+.detail-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    z-index: 4;
+}
+
+.detail-box {
+    font-family: 'Open Sans',sans-serif;
+    position: absolute;
+    top: 95px;
+    left: 200px;
+    width: 400px;
+    padding: 20px;
+    background: white; 
+    border: 5px solid grey; 
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    z-index: 10;
+}
+
+.calloutUp { 
+	position:relative;
+	height: 0; 
+	width: 0; 
+	border-bottom: 15px solid grey; 
+	border-left: 12px dotted transparent; 
+	border-right: 12px dotted transparent; 
+	left: 300px; 
+	top: -40px; 
+	margin-left: 30px; z-index: 11; }
+
+.calloutUp2 { 
+	position: relative; 
+	left: -12px; 
+	top: 8px; 
+	border-bottom: 15px solid white; 
+	border-left: 12px dotted transparent; 
+	border-right: 12px solid transparent; 
+	z-index: 12; }
+
+.detail-box p {
+	font-size: 15px;
+}
+
+
+.detail-box h1 {
+	font-weight: bold;
+}
+
+.detail-box h2 {
+	font-weight: normal;
+	font-size: 16px;
+	font-style: italic;
+}
+
+.detail-box .more {
+	color:#2F94C8;
+        font-weight:bold;
+}
+
+.close {
+	background: #2F94C8;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+}
+/* Code added on 14/01/2013 by Hao Zhou -- END */
+
+/* Code added on 31/01/2013 by Hao Zhou -- START */
+.s_clearfix::after {
+        visibility: hidden;
+        display: block;
+        content: " ";
+        clear: both;
+        height: 0;
+    }
+/* Code added on 31/01/2013 by Hao Zhou -- END */
+
+/* Code added on 07/02/2013 by Hao Zhou -- START */
+div#s_review {
+	position:absolute;
+	left:280px;
+	width:160px;
+	font-size:16px;
+	font-weight:bold;
+}
+
+#s_menu {
+	padding:0;
+}
+
+#s_menu > li {
+	cursor:pointer;
+	font-weight:bold;
+	font-size:15px;
+	border:2px solid black;
+	display: list-item;
+	background:black;
+	border-radius: 4px;
+	margin-bottom:5px;
+}
+
+#s_menu >li > label {
+	color:white;
+	padding-left:5px;
+}
+
+#s_menu > li > span {
+	float:right;
+	display:inline-block;
+}
+
+#s_menu li li {
+        background-color:#fff;
+       	background-image: none;
+}
+
+/* Code added on 07/02/2013 by Hao Zhou -- END */
+
+/* Code added on 13/02/2013 by Hao Zhou -- START */
+
+div#s_cm_sidebar {
+	background: none;
+	padding: 0;
+	margin:10px;
+	float: left;
+	display: inline;
+	width: 200px;
+	height: 400px;
+	color:black;
+	font-family: 'Open Sans',sans-serif;
+}
+
+div#s_cm_video_area {
+	height: 600px;
+	width: 680px;
+	left: 15px;
+	position: relative;
+	margin-top:10px;
+        overflow:hidden;
+	font-family: 'Open Sans',sans-serif;
+}
+
+div.s_cm_info {
+	position: absolute;
+	font-size:14px;
+	width:680px;
+	height:200px;
+}
+
+div.s_cm_thumbnail {
+	border:2px solid grey;
+	border-radius: 4px;
+	position: relative;
+	display:inline-block;
+	width:320px;
+}
+
+.s_cm_thumbnail img {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+}
+
+.thumbnail-overlay {
+	top: 0;
+    left: 0;
+	width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 4;
+	background:rgba(0,0,0,.5) url('http://vibewire.org/wp-content/uploads/2013/02/play_button.png') no-repeat center center;
+}
+
+.s_cm_intro {
+	display:inline-block;
+	position:absolute;
+	margin-left:20px;
+}
+
+.s_cm_intro p {
+	margin:0;
+	margin-bottom:5px;
+}
+
+.back2list {
+	top:480px;
+	left:290px;
+	width:100px;
+	font-size:16px;
+	font-weight:bold;
+	position:absolute;
+	text-align:center;
+}
+
+div#s_video_container {
+	height:100%;
+	display: none;
+}
+
+div#s_cm_video {
+	position: absolute;
+	top:70px;
+	left: 50px;
+	width: 580px;
+	height: 400px;
+	display:none;
+	background-color:rgba(0,0,0,.5);
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+	background:rgba(0,0,0,.5) url('http://vibewire.org/wp-content/uploads/2013/02/showcase_loading.gif') no-repeat center center;
+    z-index: 4;
+}
+
+/* Code added on 13/02/2013 by Hao Zhou -- END */
