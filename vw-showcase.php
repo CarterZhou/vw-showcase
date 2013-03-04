@@ -26,3 +26,9 @@ License: GPLv2
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 ?>
+<?php 
+    function vw_helloworld(){
+        error_log("hello world");   
+    }    
+    add_action('get_header','vw_helloworld');
+?>
