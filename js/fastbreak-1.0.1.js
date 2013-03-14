@@ -1,3 +1,4 @@
+
 /*
  * Author : Hao Zhou
  * Date : 19/01/2013
@@ -80,6 +81,7 @@ jQuery(document).ready(function($) {
 							var urls = links['urls'];
 							var speakers = links['speakers'];
 			                document.getElementById('s_subject_a').href = reviewUrl ;
+							document.getElementById('s_subject_a').target = '_blank';
 							$('div.s_vid_content').each(function(index) {
 								if(index < urls.length){
 									$video = $('<iframe />')
@@ -99,7 +101,9 @@ jQuery(document).ready(function($) {
 								}
 							});
 							var topPosition = 70 + 270 * Math.ceil(urls.length/2);
-							$bottomLink = $(document.createElement('a')).attr('href', reviewUrl).text('Read the review here');
+							$bottomLink = $(document.createElement('a'))
+							.attr('href', reviewUrl)
+							.attr('target','_blank').text('Read the review here');
 							$('#s_review').append($bottomLink).css('top', topPosition);
 						}else{
 							$(document.getElementsByClassName('s_vid_content')[0]).html("<p>Sorry, no videos were found.</p>");
@@ -140,7 +144,11 @@ jQuery(document).ready(function($) {
 							 	 // Set date
 							 	 $presented_date.text(details.date);
 							 	 // Set review link
-							 	 $more.attr('href', details.review_link === ''? '#': details.review_link);
+								 if(details.review_link === ''){
+								 	$more.attr('href','#');
+								 }else{
+								 	$more.attr('href',details.review_link).attr('target','_blank');
+								 }
 							 	 // Set text introduction
 							 	 var intro = details.intro;
 							 	 intro = intro.replace(/\n/,'<br>');
