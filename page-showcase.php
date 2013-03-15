@@ -401,15 +401,13 @@ if (isset($_POST['subject']) && $_POST['subject']!='') {
 										'http://www.youtube.com/embed/veXVq9YhII4',
 										'http://www.youtube.com/embed/nUTwLfkyCKQ',
 										'http://www.youtube.com/embed/09_z6EdduTI',
-										'http://www.youtube.com/embed/lMPcqKKIsPA',
-										'http://www.youtube.com/embed/Cim2tzI2DS4'
+										'http://www.youtube.com/embed/lMPcqKKIsPA'
 										),
 								'speakers'=>array(
 										'Lilly McComb',
 										'Ant McPhail',
 										'Vanessa Cullen',
-										'Jenni Illoski',
-										'Louise Helliwell & Alex DeBonnis'
+										'Jenni Illoski'
 									),
 								'intro'=>''
 							),
