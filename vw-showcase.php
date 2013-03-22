@@ -17,11 +17,11 @@ License: GPLv2
     function vw_showcase_menu() {
 
         //create custom top-level menus
-        add_menu_page( 'Showcase Settings Page', 'Video Showcase', 'manage_options', __FILE__, 'vw_showcase_settings_display_page', plugins_url('vw-showcase/images/wp-logo.png'));
+        add_menu_page( 'Showcase Settings Page', 'Video Showcase', 'manage_options', 'vw-showcase.php', 'vw_showcase_settings_display_page', plugins_url('vw-showcase/images/wp-logo.png'));
         
         //create submenu items
-        add_submenu_page( __FILE__, 'Change Media Settings', 'Change Media', 'manage_options', __FILE__.'_changemedia', 'vw_changemedia_page' );
-        add_submenu_page( __FILE__, 'fastBREAK Settings', 'fastBREAK', 'manage_options', __FILE__.'_fastBREAK', 'vw_fastbreak_page' );
+        add_submenu_page( 'vw-showcase.php', 'fastBREAK Settings', 'fastBREAK', 'manage_options', 'vw-showcase.php', 'vw_fastbreak_page' );
+        add_submenu_page( 'vw-showcase.php', 'Change Media Settings', 'Change Media', 'manage_options', 'vw-changemedia-admin.php', 'vw_changemedia_page' );
     }
 
     function vw_showcase_html($text){
@@ -201,8 +201,10 @@ License: GPLv2
     }
 
     function vw_changemedia_page(){
+        include("vw-changemedia-admin.php");
     }
 
      function vw_fastbreak_page(){
+         include("vw-fastbreak-admin.php");
     }
 ?>

@@ -110,7 +110,7 @@ jQuery(document).ready(function($) {
 					}else{
 						$(document.getElementsByClassName('s_vid_content')[0]).html("<p>Sorry, no videos were found.</p>");
 					}
-					$(this).addClass('active');
+					$('input:radio').addClass('active');
 				},'json');
  				},this),800);
 			}
