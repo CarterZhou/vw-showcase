@@ -1,4 +1,3 @@
-
 /*
  * Author : Hao Zhou
  * Date : 19/01/2013
@@ -116,69 +115,68 @@ jQuery(document).ready(function($) {
 			}
 	});
 
+	// Show some basic information when users hover on a particular topic text
 	$('#s_subject_a').live('mouseenter',function() {
-		$.data(this,'timer',
-			setTimeout(
-	  		$.proxy(function(){
-      		if ($(this).hasClass('active')){
-      			$(this).removeClass('active');
-      			var subject = $(this).text().toLowerCase();
-					$.post('http://vibewire.org/fastbreak-showcase/', {subject: subject}, function(data, textStatus, xhr) {
-						 var details = $.parseJSON(data);
-							if (!$.isEmptyObject(details)) {
-							  	$detail = $(document.createElement('div'))
-											.hide()
-											.addClass('detail-box')
-											.appendTo('#s_wrapper');
-								$tip = $(document.createElement('div')).addClass('calloutUp');
-								$tip2 = $(document.createElement('div')).addClass('calloutUp2').appendTo($tip);
-								$title = $(document.createElement('h1')).hide();
-								$speakers = $(document.createElement('h2')).hide();
-								$presented_date = $(document.createElement('h2')).hide();
-								$more = $(document.createElement('a')).addClass('more').text(" more on review...");
-								// Set title/topic
-							 	 $title.text(details.topic.toUpperCase());
-							 	 // Set speakers
-							 	 var all_speakers = '<strong>Presented By: </strong>'
-							 	 for (var i = 0; i < details.speakers.length; i++) {
-							 	 	all_speakers += details.speakers[i]+' , '
-							 	 }
-							 	 all_speakers = all_speakers.substring(0,all_speakers.length-2);
-							 	 $speakers.html(all_speakers);
-							 	 // Set date
-							 	 $presented_date.text(details.date);
-							 	 // Set review link
-								 if(details.review_link === ''){
-								 	$more.attr('href','#');
-								 }else{
-								 	$more.attr('href',details.review_link).attr('target','_blank');
-								 }
-							 	 // Set text introduction
-							 	 var intro = details.intro;
-							 	 intro = intro.replace(/\n/,'<br>');
-							 	 intro = intro.replace(/fastBREAK/g,'fast<strong><em>BREAK</em></strong>');
-							 	 $p = $(document.createElement('p')).hide();
-								 $p.html(intro).append($more.show()); 
-								// Attach to div and show
-								 $detail.empty()
-								 .append($tip)
-								 .append($title.show())
-								 .append($speakers.show())
-								 .append($presented_date.show())
-								 .append($p.show()).slideDown('800');
+      	if ($(this).hasClass('active')){
+			$(this).removeClass('active');
+	  		// Create a modal box
+	  		$detail = $(document.createElement('div'))
+						.hide()
+						.addClass('detail-box')
+						.appendTo('#s_wrapper');
+			$tip = $(document.createElement('div')).addClass('calloutUp');
+			$tip2 = $(document.createElement('div')).addClass('calloutUp2').appendTo($tip);
+			$tip.appendTo($detail);
+			// Add loading prompt
+			$loadingText = $(document.createElement('h2')).text('Loading...').appendTo($detail);
+			$detail.show();
+			var subject = $(this).text().toLowerCase();
+			$.post('http://vibewire.org/fastbreak-showcase/', {subject: subject}, function(data, textStatus, xhr) {
+				 var details = $.parseJSON(data);
+					if (!$.isEmptyObject(details)) {
+						$title = $(document.createElement('h1')).hide();
+						$speakers = $(document.createElement('h2')).hide();
+						$presented_date = $(document.createElement('h2')).hide();
+						$more = $(document.createElement('a')).addClass('more').text(" more on review...");
+						// Set title/topic
+					 	 $title.text(details.topic.toUpperCase());
+					 	 // Set speakers
+					 	 var all_speakers = '<strong>Presented By: </strong>'
+					 	 for (var i = 0; i < details.speakers.length; i++) {
+					 	 	all_speakers += details.speakers[i]+' , '
+					 	 }
+					 	 all_speakers = all_speakers.substring(0,all_speakers.length-2);
+					 	 $speakers.html(all_speakers);
+					 	 // Set date
+					 	 $presented_date.text(details.date);
+					 	 // Set review link
+						 if(details.review_link === ''){
+						 	$more.attr('href','#');
 						 }else{
-							$('#s_subject_a').addClass('active');
+						 	$more.attr('href',details.review_link).attr('target','_blank');
 						 }
-					});
-      			}
-	  		},this)
-			,200)
-		);
-	}
-	);
-	$('#s_subject_a').live('mouseleave',function(){
-		clearTimeout($.data(this,'timer'));
+					 	 // Set text introduction
+					 	 var intro = details.intro;
+					 	 intro = intro.replace(/\n/,'<br>');
+					 	 intro = intro.replace(/fastBREAK/g,'fast<strong><em>BREAK</em></strong>');
+					 	 $p = $(document.createElement('p')).hide();
+						 $p.html(intro).append($more.show()); 
+						// Attach to div and show
+						 $detail.empty()
+						 .append($tip)
+						 .append($title.show())
+						 .append($speakers.show())
+						 .append($presented_date.show())
+						 .append($p.show()).slideDown('800');
+					 }else{
+						$('#s_subject_a').addClass('active');
+						// If there is no review, give not-found prompt
+						$loadingText.text('No review.');
+					 }
+				});
+		}
 	});
+
     // Highlight a subject when it is hovered.
 	$('input[name="subject"] + label').hover(         
 		function() {
