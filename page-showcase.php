@@ -46,6 +46,53 @@ function getVideoLinks(){
 
 if (isset($_POST['subject']) && $_POST['subject']!='') {
 	$fastbreak_info = array(
+
+						'together' =>
+							array(
+								'date'=>'24 February 2013',
+								'review_link'=>'http://vibewire.org/fastbreak-together/',
+								'urls'=>
+									array(
+										'http://www.youtube.com/embed/UXpQWhwDOAc',
+										'http://www.youtube.com/embed/D55dwBkxFpM',
+										'http://www.youtube.com/embed/u6upmpwBWoo',
+										'http://www.youtube.com/embed/B_hc1EFqYLs'
+									),
+								'speakers'=>
+									array(
+										'Carl Harris',
+										'Ryan Fitzgibbon',
+										'Jessica Robertson',
+										'Marcus Ross'
+									),
+								'intro'=>'When you think of TOGETHER many things spring to mind. Family, sharing, collaboration, love and equality are just a few. It is said that humans are social creatures by nature but in this day and age, technology can mask how we relate with one another. We now live in a world that is connected through a multitude of platforms, from the internet, the telephone, easily accessible transportation methods and of course, social media.
+								But the idea of truly connecting is one that can be somewhat elusive. Some go through life never having a companion, others have many throughout their lifespan. For some, there is that special someone from day one. Love and loss are key components to everyonesâ€™ lives. Having a sense of togetherness builds family and communities and is something that most long for.
+								On Friday 22nd February, to launch this yearâ€™s series, fastBREAK: Together will have speakers sharing stories of the impact they have in bringing people together.'
+							),
+
+						'craft' =>
+							array(
+								'date'=>'22 March 2013',
+								'review_link'=>'http://vibewire.org/2013/03/fastbreak-craft/',
+								'urls'=>
+									array(
+										'http://www.youtube.com/embed/IwZk9u-sd4o',
+										'http://www.youtube.com/embed/E5PZr9_um1o',
+										'http://www.youtube.com/embed/uuv7ouEFeBo',
+										'http://www.youtube.com/embed/IF2fHrEDmnU',
+										'http://www.youtube.com/embed/-2b2rTlO5Ag'
+									),
+								'speakers'=>
+									array(
+										'Rupal Ismin',
+										'Meghan McTavish',
+										'Kitiya Palaskas',
+										'Oscar McMahon',
+										'Anna Lise De Lorenzo'
+									),
+								'intro'=>'To practice your own craft implies a standard of expertise, of passion, of devotion and artistry. A persons craft is considered to be their profession, but it is also the skill they possess with the most knowledge, proficiency and understanding.
+								Craft suggests playfulness, it is moments of impulsive creativity leading to ingenuity and craftsmanship. Consequently it is the key in creating a niche market, a way of perfecting a skill within your field. It is the art of being crafty, of thinking on your feet and creating new ways of getting things done.'
+							),
 						'u-turn' =>  
 							array(
 								'date'=> '24 February 2012',
@@ -439,7 +486,7 @@ if (isset($_POST['subject']) && $_POST['subject']!='') {
 										'http://www.youtube.com/embed/7tDKG8rXKUk'
 										),
 								'speakers'=>array(
-										'Chris Thé',
+										'Chris ThÃƒÂ©',
 										'Jono Fisher',
 										'Luke Escombe',
 										'Rai Santana',
