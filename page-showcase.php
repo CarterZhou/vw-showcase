@@ -66,8 +66,8 @@ if (isset($_POST['subject']) && $_POST['subject']!='') {
 										'Marcus Ross'
 									),
 								'intro'=>'When you think of TOGETHER many things spring to mind. Family, sharing, collaboration, love and equality are just a few. It is said that humans are social creatures by nature but in this day and age, technology can mask how we relate with one another. We now live in a world that is connected through a multitude of platforms, from the internet, the telephone, easily accessible transportation methods and of course, social media.
-								But the idea of truly connecting is one that can be somewhat elusive. Some go through life never having a companion, others have many throughout their lifespan. For some, there is that special someone from day one. Love and loss are key components to everyonesâ€™ lives. Having a sense of togetherness builds family and communities and is something that most long for.
-								On Friday 22nd February, to launch this yearâ€™s series, fastBREAK: Together will have speakers sharing stories of the impact they have in bringing people together.'
+								But the idea of truly connecting is one that can be somewhat elusive. Some go through life never having a companion, others have many throughout their lifespan. For some, there is that special someone from day one. Love and loss are key components to everyonesÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ lives. Having a sense of togetherness builds family and communities and is something that most long for.
+								On Friday 22nd February, to launch this yearÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s series, fastBREAK: Together will have speakers sharing stories of the impact they have in bringing people together.'
 							),
 
 						'craft' =>
@@ -92,6 +92,30 @@ if (isset($_POST['subject']) && $_POST['subject']!='') {
 									),
 								'intro'=>'To practice your own craft implies a standard of expertise, of passion, of devotion and artistry. A persons craft is considered to be their profession, but it is also the skill they possess with the most knowledge, proficiency and understanding.
 								Craft suggests playfulness, it is moments of impulsive creativity leading to ingenuity and craftsmanship. Consequently it is the key in creating a niche market, a way of perfecting a skill within your field. It is the art of being crafty, of thinking on your feet and creating new ways of getting things done.'
+							),
+
+						'upstarts' =>
+							array(
+								'date'=>'26 April 2013',
+								'review_link'=>'http://vibewire.org/fastbreak-upstarts/',
+								'urls'=>
+									array(
+										'http://www.youtube.com/embed/tST5zVk879Q',
+										'http://www.youtube.com/embed/YpLoUBluJS8',
+										'http://www.youtube.com/embed/shbw6eT8YUI',
+										'http://www.youtube.com/embed/s5yWK7HfHaQ',
+										'http://www.youtube.com/embed/rrBr-_SuyQo'
+									),
+								'speakers'=>
+									array(
+										'Mickey Kovari',
+										'Ahmed Haider',
+										'Jordan Bryon',
+										'Bosco Tan',
+										'Rachel Healy'
+									),
+								'intro'=>'The ability to think differently has proven to push the boundaries of what is possible. In an age where technology is constantly evolving, it is clear that people with unique and creative ideas have come to shape our future.
+								When these ideas come to full fruition they can change the nature of the market they succeed in, upstarts have the ability to challenge industries and add to an evolution of social and economic change. To wade through certain challenges and to come out clean on the other side is how the upstart triumphs.'
 							),
 						'u-turn' =>  
 							array(
@@ -486,7 +510,7 @@ if (isset($_POST['subject']) && $_POST['subject']!='') {
 										'http://www.youtube.com/embed/7tDKG8rXKUk'
 										),
 								'speakers'=>array(
-										'Chris ThÃƒÂ©',
+										'Chris ThÃƒÆ’Ã†â€™Ãƒâ€šÃ‚Â©',
 										'Jono Fisher',
 										'Luke Escombe',
 										'Rai Santana',
@@ -530,17 +554,21 @@ if (isset($_POST['subject']) && $_POST['subject']!='') {
 							'mental-health'=>
 							array(
 								'thumbnails'=>array('http://vibewire.org/wp-content/uploads/2013/02/mental-health.jpg'),
-								'intros'=>array('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+								'intros'=>array('Did you know that one in four young people, aged 16--24, will experience a mental health-related disorder in any given year in Australia? This month Vibewire explored the issue of mental health - speaking to sufferers, mental health professionals and others impacted by mental health issues. Find out more <a href="http://vibewire.org/?s=mental+health" title="Mental Health">here</a>.'),
 								'urls'=>array('http://www.youtube.com/embed/g4zVW4Ar0Qk')
 								),
 							'indigenous-youth'=>
 							array(
 								'thumbnails'=>array('http://vibewire.org/wp-content/uploads/2013/02/youth.jpg'),
-								'intros'=>array('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'),
+								'intros'=>array('Vibewire met with Australia\'s young Indigenous leaders, at Yarn About Youth, to talk about leadership, role models and their hopes for the future. Featuring Benson Saulo, Effie Walker, Maia Giordano and Blayke Tatafu and Hannah Donnelly.'),
 								'urls'=>array('http://www.youtube.com/embed/etrvQB6Tvj0')
 								),
 							'religion'=>
-							array(),
+							array(
+								'thumbnails'=>array('http://vibewire.org/wp-content/uploads/2013/05/cm_religion.png'),
+								'intros'=>array('Research consistently shows that young people are turning away from organised religion. Despite this trend, religion remains a significant influence on society. Vibewire hit the streets to find out what young people really think about religion.'),
+								'urls'=>array('http://www.youtube.com/embed/vLO7Yuduk74')
+								),
 							'politics'=>
 							array(),
 							'science-technology'=>
@@ -549,18 +577,24 @@ if (isset($_POST['subject']) && $_POST['subject']!='') {
 							array(
 								'thumbnails'=>
 									array(
+										'http://vibewire.org/wp-content/uploads/2013/02/lgbtiq2.jpg',
 										'http://vibewire.org/wp-content/uploads/2013/02/lgbtiq.jpg',
-										'http://vibewire.org/wp-content/uploads/2013/02/lgbtiq2.jpg'
+										'http://vibewire.org/wp-content/uploads/2013/05/lgbtiq3.png',
+										'http://vibewire.org/wp-content/uploads/2013/05/lgbtiq4.png'
 									),
 								'intros'=>
 									array(
-									'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-									'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+									'Growing up is hard enough without the scrutiny that comes with being a lesbian, gay, bisexual, transgender, intersex or queer youth. In October Vibewire looks at the experience of growing up identifying as lesbian, gay, bisexual, transgender, intersex or queer.',
+									'In October, Vibewire sparked the discussion around LGBTIQ youth issues. We spoke to Australian musician Mojo Juju about her experience growing up, musical inspiration, gender identity, gay marriage and more! ',
+									'In October Vibewire looked at the experience of identifying as LGBTIQ. Blue Lucine from Vibewire spoke to Xavier about his transition from female to male, the reaction of family and friends and his magazine \'Dirty Queer\', a which focuses on local and international queer photography, arts and culture.',
+									'Growing up is hard enough without the scrutiny that comes with being a Lesbian, Gay, Bisexual, Transgender, Intersex or Queer youth (LGBTIQ). This month Vibewire has been looking at the experience and key discussions of identifying as LGBTIQ. Vibewire video journalist Taehyun Kim went out to the streets of Sydney to find out your thoughts on the important conversations of the LGBTIQ community. '
 									),
 								'urls'=>
 									array(
+										'http://www.youtube.com/embed/sITN9zBSie4',
 										'http://www.youtube.com/embed/DKmX4_HvPa0',
-										'http://www.youtube.com/embed/sITN9zBSie4'
+										'http://www.youtube.com/embed/JOtMGzl5mx4',
+										'http://www.youtube.com/embed/8NXZLnqRSwc'
 									)
 								),
 							'health'=>
