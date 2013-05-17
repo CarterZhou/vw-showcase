@@ -56,11 +56,7 @@ jQuery(document).ready(function($) {
                 setTimeout($.proxy(function(){
             	$('#s_vid_sub').empty();
             	$('#s_video_subject').css('border-bottom','2px black solid');
-            		if($('#s_vid_img').children().length === 0){
-                    $film = $(document.createElement('img'));
-                    $film.attr({src:'http://vibewire.org/wp-content/uploads/2013/01/film_video_picture_film_roll_media.png',width:'50px',height:'50px'});
-                    $film.appendTo('#s_vid_img');
-                   }
+            		
                 var subjectName =  $(this).val();
                	$subjectAnchor = $(document.createElement('a'));
                	$subjectAnchor
@@ -68,7 +64,7 @@ jQuery(document).ready(function($) {
                	.attr('id', 's_subject_a')
                	.attr('href','#').appendTo('div#s_vid_sub');
                	$subjectAnchor.text(subjectName.toUpperCase());
-               	$('div.s_speaker_name,div.idea_img,div.s_vid_content,div#s_review').empty();
+               	$('div.s_speaker_name,div.s_vid_content,div#s_review').empty();
                	$('<div>').addClass('loading_img').hide().appendTo($('div.s_vid_content')).fadeIn('fast');
 
 	        	// Get form data and serialize it.
@@ -91,12 +87,7 @@ jQuery(document).ready(function($) {
 								.attr('src',urls[index])
 								.attr('frameborder', '0')
 								.attr('allowfullscreen', 'true').hide();
-								$ideaImg = $(document.createElement('img'));
-								$ideaImg.attr({
-									width: '30px',
-									height: '30px',
-									src:'http://vibewire.org/wp-content/uploads/2013/01/BRIGHT_IDEAS_bulb_normal.jpg'
-								}).appendTo($(this).prev().children().first());
+								
 								$(this).prev().children().last().html("<p>"+speakers[index]+"</p>");
 								$video.appendTo(this).show();
 							}

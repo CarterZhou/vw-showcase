@@ -29,7 +29,6 @@ div#s_sidebar {
 
 div#welcome {
 	margin-top:25px;
-	margin-left:20px;
 	position:absolute;
 	font-family: 'Open Sans',sans-serif;
 }
@@ -120,7 +119,7 @@ div#s_vid_img {
 
 div#s_vid_sub {
 	position:relative;
-	top:-15px;
+	top:10px;
 	display:inline;
 }
 
@@ -348,6 +347,7 @@ div.s_cm_thumbnail {
 }
 
 .s_cm_intro {
+	font-size:16px;
 	display:inline-block;
 	position:absolute;
 	margin-left:20px;
@@ -356,6 +356,9 @@ div.s_cm_thumbnail {
 .s_cm_intro p {
 	margin:0;
 	margin-bottom:5px;
+}
+.s_cm_intro p a {
+	font-weight:bold;
 }
 
 .back2list {
@@ -396,3 +399,15 @@ div#s_cm_video {
 }
 
 /* Code added on 13/02/2013 by Hao Zhou -- END */
+
+#sponser_logo {
+	margin-top: -7px;
+}
+
+#spon_title {
+	font-weight: bold;font-style: italic;font-size: 16px;
+}
+
+#sponser_logo ul li {
+	padding-right: 16px;
+}

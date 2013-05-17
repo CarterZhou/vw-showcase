@@ -35,11 +35,7 @@ jQuery(document).ready(function($) {
                 setTimeout($.proxy(function(){
                 	$('#s_vid_sub').empty();
                 	$('#s_video_subject').css('border-bottom','2px black solid');
-                		if($('#s_vid_img').children().length === 0){
-                        $film = $(document.createElement('img'));
-                        $film.attr({src:'http://vibewire.org/wp-content/uploads/2013/01/film_video_picture_film_roll_media.png',width:'50px',height:'50px'});
-                        $film.appendTo('#s_vid_img');
-                       }
+            
 	                var subjectName =  $(this).next().text();
 	               	$subjectAnchor = $(document.createElement('a'));
 	               	$subjectAnchor
