@@ -9,39 +9,15 @@
 
 jQuery(document).ready(function($) {
 
+		var original_height = 600;
+		var baseTop = 70;
+		var marginTop = 220;
+		var loaded_height = 0;
+
 	    $('div#ileLoader-524541').empty();
 
-	    $( '#s_menu > li > ul' ).click(function(e){
-			e.stopPropagation();
-		});
-	 	// Set up collapsible list.
-		$('#s_menu > li:not(:first)').find('span').addClass('ui-icon-circle-triangle-s').end()
-		.find('ul').hide();
-		$('#s_menu > li:first').find('span').addClass('ui-icon-circle-triangle-n');
-        // Fold / unfold items on a list.
-		$('#s_menu > li').click(function(){
-			var imVisible = $(this).find('ul:first').is(':visible');
-			if(!imVisible){
-				 var $visibleUL = $(this).parent().find('> li ul:visible');
-				 $visibleUL.slideUp();
-				 $visibleUL.parent().find('span')
-				 .removeClass('ui-icon-circle-triangle-n')
-				 .addClass('ui-icon-circle-triangle-s');
-
-				 $(this).find('ul').slideDown();
-				 $(this).find('span')
-				 .removeClass('ui-icon-circle-triangle-s')
-				 .addClass('ui-icon-circle-triangle-n');
-			}else{
-				 $(this).find('ul').slideUp();
-
-				 $(this).find('span')
-				 .removeClass('ui-icon-circle-triangle-n')
-				 .addClass('ui-icon-circle-triangle-s');
-			}
- 	   	});
         // Slide welcome text from right to left.
-        setTimeout(function(){$('div#welcome').animate({left: '0px'},800);},2000);
+        setTimeout(function(){$('div#welcome').animate({left: '0px'},800);},1000);
         // Display associated videos when one radio button is clicked.
 		$('#s_menu > li > ul input:radio').click(function(event) {
                 // Slide welcome text from left to right then remove welcome div.
@@ -51,11 +27,9 @@ jQuery(document).ready(function($) {
                 // Show main container.
                 $('div#s_video_container').css('display', 'block');
                 // Clean up divs.
-                $('div#s_cm_video,div.s_cm_thumbnail,div.s_cm_intro').empty();
+                $('div#s_cm_video').empty();
+               	$('div.s_cm_info').remove();
                 $('#s_cm_video').css('display', 'none');
-                $('.error').remove();
-                $('div.s_cm_info').css('display', 'none').removeClass('active');
-                
                 // Show subject name on top of videos
                 $('div.back2list').remove();
                 setTimeout($.proxy(function(){
@@ -73,9 +47,7 @@ jQuery(document).ready(function($) {
 	               	.attr('id', 's_subject_a')
 	               	.attr('href','#').appendTo('div#s_vid_sub');
 	               	$subjectAnchor.text(subjectName);
-                },this),800);
-
-		        setTimeout($.proxy(function(){
+		       
 		        	// Get form data and serialize it.
 		        	$form = $('#s_form_subject');
 					var data = $form.serialize();
@@ -86,31 +58,36 @@ jQuery(document).ready(function($) {
 							var thumbnails = response['thumbnails'];
 							var urls = response['urls'];
 							var intros = response['intros'];
-							$('div.s_cm_thumbnail').each(function(index) {
-								if(index < thumbnails.length){
-									$(this).parent().css('display', 'block').addClass('active');
-									$(this).show();
-									$(this).data('cmVideo', urls[index]);
-									$intro = $('<p/>').text(intros[index]).hide();
-									$thumbnail = $('<img/>').attr('src', thumbnails[index]).hide();
-									$intro.appendTo($(this).next()).fadeIn('fast');
-									$thumbnail.appendTo(this).fadeIn('fast');
-								}
-							});
+
+							var margin = 0;
+							for (var index = 0; index < urls.length; index++) {
+								margin = index*marginTop;
+								$intro = $('<p/>').html(intros[index]);
+								$thumbnail = $('<img/>').attr('src', thumbnails[index]);
+
+								$info_div = $('<div/>').addClass('s_cm_info').hide();
+								$thumbnail_div = $('<div/>').addClass('s_cm_thumbnail').append($thumbnail).appendTo($info_div);
+								$intro_div = $('<div/>').addClass('s_cm_intro').append($intro).appendTo($info_div);
+								$thumbnail_div.data('cmVideo', urls[index]);
+								$info_div.css('top', baseTop + margin);
+								$info_div.appendTo($('div#s_video_container')).fadeIn('fast');
+								loaded_height = baseTop + margin + 270;
+							}
+							$('div#s_cm_video_area').animate({height:loaded_height},800,function(){});
 						}else{
-							$first = $(document.getElementsByClassName('s_cm_info')[0]);
-							$first.css('display', 'block');
-							$first.find('div.s_cm_thumbnail').hide();
-							$('<div>').addClass('error').html("<p><strong>Sorry, no videos were found.</strong></p>").appendTo($first);
+							$error_div = $('<div>').addClass('s_cm_info').attr('top', baseTop);
+							$('<div>').addClass('error').html("<p><strong>Sorry, no videos were found.</strong></p>").appendTo($error_div);
+							$('div#s_cm_video_area').animate({height:original_height},800,function(){});
+							$error_div.appendTo($('div#s_video_container')).fadeIn('fast');
 						}
 					},'json');
-		   		 },this),1200);
+		   		 },this),800);
 	});
 	
 	// Hide video list when one of the thumbnails are clicked,
 	// and display video container div.
 	$('.s_cm_thumbnail').live('click', function(event) {
-		$('div#s_wrapper').css('height','600');
+		$('div#s_cm_video_area').animate({height:original_height},800,function(){});
 		$that = $(this);
 		$('div.s_cm_info:visible').fadeOut('1500',function(){
 			if ($('.s_cm_info:animated').length === 1) {
@@ -130,23 +107,25 @@ jQuery(document).ready(function($) {
 	});
 
 	// Show the play button.
-	$('.s_cm_thumbnail').hover(function() {
+	$('.s_cm_thumbnail').live('mouseenter',function() {
 		$('<div/>')
 		.addClass('thumbnail-overlay')
 		.appendTo(this);
-	}, function() {
+	});
+
+	// Remove the play button when mouse leaves
+	$('.s_cm_thumbnail').live('mouseleave',function() {
 		$('.thumbnail-overlay').remove();
 	});
 
 	// Show video list again.
 	$('.back2list a').live('click', function(event) {
 		event.preventDefault();
-		$(this).parent().remove();
-		$('#s_cm_video').fadeOut('fast');
-		$('div.s_cm_info').each(function(index) {
-			if ($(this).hasClass('active')) {
-				$(this).fadeIn('1500');
-			}
+		$that = $(this);
+		$('#s_cm_video').fadeOut(500,function(){
+			$that.parent().remove();
+			$('div#s_cm_video_area').animate({height:loaded_height},800,function(){});
+			$('div.s_cm_info').fadeIn('fast');
 		});
 	});
 
