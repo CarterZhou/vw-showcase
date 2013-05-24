@@ -66,8 +66,8 @@ if (isset($_POST['subject']) && $_POST['subject']!='') {
 										'Marcus Ross'
 									),
 								'intro'=>'When you think of TOGETHER many things spring to mind. Family, sharing, collaboration, love and equality are just a few. It is said that humans are social creatures by nature but in this day and age, technology can mask how we relate with one another. We now live in a world that is connected through a multitude of platforms, from the internet, the telephone, easily accessible transportation methods and of course, social media.
-								But the idea of truly connecting is one that can be somewhat elusive. Some go through life never having a companion, others have many throughout their lifespan. For some, there is that special someone from day one. Love and loss are key components to everyonesÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢ lives. Having a sense of togetherness builds family and communities and is something that most long for.
-								On Friday 22nd February, to launch this yearÃƒÂ¢Ã¢â€šÂ¬Ã¢â€žÂ¢s series, fastBREAK: Together will have speakers sharing stories of the impact they have in bringing people together.'
+								But the idea of truly connecting is one that can be somewhat elusive. Some go through life never having a companion, others have many throughout their lifespan. For some, there is that special someone from day one. Love and loss are key components to everyones\' lives. Having a sense of togetherness builds family and communities and is something that most long for.
+								On Friday 22nd February, to launch this year\'s series, fastBREAK: Together will have speakers sharing stories of the impact they have in bringing people together.'
 							),
 
 						'craft' =>
