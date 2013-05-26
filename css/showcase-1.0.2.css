@@ -168,8 +168,6 @@ div.s_vid_content{
 .detail-box {
     font-family: 'Open Sans',sans-serif;
     position: absolute;
-    top: 95px;
-    left: 200px;
     width: 400px;
     padding: 20px;
     background: white; 
@@ -187,7 +185,7 @@ div.s_vid_content{
 	border-bottom: 15px solid grey; 
 	border-left: 12px dotted transparent; 
 	border-right: 12px dotted transparent; 
-	left: 300px; 
+	left: 80px; 
 	top: -40px; 
 	margin-left: 30px; z-index: 11; }
 

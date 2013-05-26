@@ -44,11 +44,12 @@ jQuery(document).ready(function($) {
 	               	.attr('href','#').appendTo('div#s_vid_sub');
 	               	$subjectAnchor.text(subjectName);
 		       
-		        	// Get form data and serialize it.
-		        	$form = $('#s_form_subject');
-					var data = $form.serialize();
+	        	 	var data = {
+	               		action : 'changemedia_videos',
+	               		topic_id : $(this).val()
+               		};
 			        // Fetch data.
-		        	$.post('http://vibewire.org/change-media-showcase/',data , function(response, textStatus, xhr) {
+		        	$.post(ajax_object.ajax_url,data , function(response, textStatus, xhr) {
 						$('.loading-overlay').fadeOut('fast',function(){$(this).remove()});
 						if($.isEmptyObject(response)===false){
 							var thumbnails = response['thumbnails'];

@@ -11,26 +11,38 @@ License: GPLv2
 ?>
 <?php
     add_action( 'admin_init', 'showcase_admin_init' );
-    add_action( 'admin_menu', 'vw_showcase_menu' );
-    add_action( 'wp_enqueue_scripts', 'showcase_fb_enqueue' );
+    add_action( 'admin_menu', 'admin_vw_showcase_menu' );
+    add_action( 'wp_enqueue_scripts', 'wp_fastbreak_enqueue' );
+    add_action( 'wp_enqueue_scripts', 'wp_changemedia_enqueue' );
+    // Handle Ajax calls from fastbreak showcase page
+    add_action('wp_ajax_nopriv_fastbreak_speakers','fastbreak_speakers');
+    add_action('wp_ajax_fastbreak_speakers','fastbreak_speakers');
+    add_action('wp_ajax_nopriv_fastbreak_info','fastbreak_info');
+    add_action('wp_ajax_fastbreak_info','fastbreak_info');
+
+    // Handle Ajax calls from change media showcase page
+    add_action('wp_ajax_nopriv_changemedia_videos','changemedia_videos');
+    add_action('wp_ajax_changemedia_videos','changemedia_videos');
+
     add_filter( 'the_content', 'wp_vw_fastbreak' );
-  
+    add_filter( 'the_content', 'wp_vw_changemedia' );
+
     function showcase_admin_init(){
-        $absolute = plugins_url('',__FILE__);
+        $plugin_url = plugins_url('',__FILE__);
         // Register jquery-ui script
-        wp_register_script( 'jquery-ui-script', $absolute.'/js/jquery-ui-1.10.3.custom.min.js');
+        wp_register_script( 'jquery-ui-script', $plugin_url.'/js/jquery-ui-1.10.3.custom.min.js');
         // Register jquery-ui style sheet
-        wp_register_style( 'jquery-ui-style', $absolute.'/css/ui-lightness/jquery-ui-1.10.3.custom.min.css');
+        wp_register_style( 'jquery-ui-style', $plugin_url.'/css/ui-lightness/jquery-ui-1.10.3.custom.min.css');
     }
 
-    function vw_showcase_menu() {
+    function admin_vw_showcase_menu() {
 
         //create custom top-level menus
         add_menu_page( 'Showcase Settings Page', 'Video Showcase', 'manage_options', 'vw-showcase.php', 'vw_showcase_settings_display_page', plugins_url('vw-showcase/images/wp-logo.png'));
         
         //create submenu items
-        $page_hook_fastbreak = add_submenu_page( 'vw-showcase.php', 'fastBREAK Settings', 'fastBREAK', 'manage_options', 'vw-showcase.php', 'vw_fastbreak_page' );
-        $page_hook_changemedia =add_submenu_page( 'vw-showcase.php', 'Change Media Settings', 'Change Media', 'manage_options', 'vw-changemedia-admin.php', 'vw_changemedia_page' );
+        $page_hook_fastbreak = add_submenu_page( 'vw-showcase.php', 'fastBREAK Settings', 'fastBREAK', 'manage_options', 'vw-showcase.php', 'admin_vw_fastbreak' );
+        $page_hook_changemedia =add_submenu_page( 'vw-showcase.php', 'Change Media Settings', 'Change Media', 'manage_options', 'vw-changemedia-admin.php', 'admin_vw_changemedia' );
 
         // Hook jquery-ui script to admin screens
         add_action( 'admin_print_scripts-'.$page_hook_fastbreak,'showcase_admin_scripts' );
@@ -53,51 +65,193 @@ License: GPLv2
     function vw_showcase_settings_display_page(){
     }
 
-    function vw_changemedia_page(){
+    function admin_vw_changemedia(){
         include("vw-changemedia-admin.php");
     }
 
-     function vw_fastbreak_page(){
+     function admin_vw_fastbreak(){
          include("vw-fastbreak-admin.php");
     }
 
-    /* Build front-end pages*/ 
 
-    function showcase_fb_enqueue(){
-        if(get_the_title() === 'fastBREAK Showcase Test'){ 
-            $absolute = plugins_url('',__FILE__);
-            wp_enqueue_script('jquery');
-            wp_register_style( 'fastbreak-style', $absolute.'/css/showcase-1.0.1.css');
+     // Get information of a particular theme
+    function fastbreak_info(){
+        global $wpdb;
+        $t_fb = $wpdb->prefix."showcase_fb";
+        $t_fb_speakers = $wpdb->prefix."showcase_fb_speakers";
+        $id = intval($_POST['theme_id']);
+        $info = array();
+
+        $sql = "SELECT `speaker`,`review_link`,`topic`,`intro`,`presented_date`
+                FROM `$t_fb`,`$t_fb_speakers`
+                WHERE $t_fb.topic_id = $t_fb_speakers.topic_id AND $t_fb.topic_id=$id"; 
+
+        $results = $wpdb->get_results($sql,ARRAY_A);
+        if($wpdb->num_rows){
+            $info['topic'] = $results[0]['topic'];
+            $info['review_link'] = $results[0]['review_link'];
+            $info['intro'] = $results[0]['intro'];
+            $info['presented_date'] = $results[0]['presented_date'];
+            foreach ($results as $index => $value) {
+                $info['speakers'][$index] = $results[$index]['speaker'];
+            }
+        }
+
+        echo json_encode($info);
+        die();
+    }
+
+    // Get all speakers and associated Youtube links of a particular theme
+    function fastbreak_speakers(){
+        global $wpdb;
+        $t_fb = $wpdb->prefix."showcase_fb";
+        $t_fb_speakers = $wpdb->prefix."showcase_fb_speakers";
+        $id = intval($_POST['theme_id']);
+        $data = array();
+
+        $sql = "SELECT `speaker`,`youtube_link`,`review_link`
+                FROM `$t_fb`,`$t_fb_speakers`
+                WHERE $t_fb.topic_id = $t_fb_speakers.topic_id AND $t_fb.topic_id=$id"; 
+
+        $results = $wpdb->get_results($sql,ARRAY_A);
+        if($wpdb->num_rows){
+            $data['review_link'] = $results[0]['review_link'];
+            foreach ($results as $index => $value) {
+                $data['urls'][$index] = $results[$index]['youtube_link'];
+                $data['speakers'][$index] = $results[$index]['speaker'];
+            }
+        }
+
+        echo json_encode($data);
+        die();
+    }
+
+    // Get all video links of a particular topic
+    function changemedia_videos(){
+        global $wpdb;
+        $t_fb = $wpdb->prefix."showcase_cm";
+        $t_fb_videos = $wpdb->prefix."showcase_cm_videos";
+        $id = intval($_POST['topic_id']);
+        $videos = array();
+
+        $sql = "SELECT `thumbnail`,`intro`,`youtube_link`
+                FROM `$t_fb`,`$t_fb_videos`
+                WHERE $t_fb.topic_id = $t_fb_videos.topic_id AND $t_fb.topic_id=$id"; 
+
+        $results = $wpdb->get_results($sql,ARRAY_A);
+        if($wpdb->num_rows){
+            foreach ($results as $index => $value) {
+                $videos['thumbnails'][$index] = $results[$index]['thumbnail'];
+                $videos['urls'][$index] = $results[$index]['youtube_link'];
+                $videos['intros'][$index] = $results[$index]['intro'];
+            }
+        }
+
+        echo json_encode($videos);
+        die();
+    }
+
+    function wp_fastbreak_enqueue(){
+        if(get_the_title() === 'fastBREAK Showcase'){ 
+            $plugin_url = plugins_url('',__FILE__);
+            // Register css file
+            wp_register_style( 'fastbreak-style', $plugin_url.'/css/showcase-1.0.2.css');
             wp_enqueue_style( 'fastbreak-style' );
-            wp_register_script( 'fastbreak-script', $absolute.'/js/fastbreak-1.0.2.js');
-            wp_enqueue_script( 'fastbreak-script' );
+            // Register javascript file
+            wp_register_script( 'fastbreak-script', $plugin_url.'/js/fastbreak-1.0.3.js',array('jquery'),'1.0.3',true);
+            // For fastbreak-1.0.2.js,
+            // set a javascript object which contains ajax call url
+            wp_localize_script( 'fastbreak-script', 'ajax_object',array('ajax_url' => admin_url('admin-ajax.php')));
+            wp_enqueue_script( 'fastbreak-script');
         }
     }
 
+    function wp_changemedia_enqueue(){
+        if(get_the_title() === 'Change Media Showcase'){ 
+            $plugin_url = plugins_url('',__FILE__);
+            // Register css file
+            wp_register_style( 'changemedia-style', $plugin_url.'/css/showcase-1.0.2.css');
+            wp_enqueue_style( 'changemedia-style' );
+            // Register javascript file
+            wp_register_script( 'changemedia-script', $plugin_url.'/js/changemedia-1.0.3.js',array('jquery'),'1.0.3',true);
+            // For changemedia-1.0.2.js,
+            // set a javascript object which contains ajax call url
+            wp_localize_script( 'changemedia-script', 'ajax_object',array('ajax_url' => admin_url('admin-ajax.php')));
+            wp_enqueue_script( 'changemedia-script');
+        }
+    }
+
+
+
+    /* Build front end pages*/
     function wp_vw_changemedia($text){
-         if(get_the_title() === 'Change Media Showcase Test'){
-           // TODO
+         if(get_the_title() === 'Change Media Showcase'){
+            global $wpdb;
+            $tablename = $wpdb->prefix."showcase_cm";
+            $sql =
+            "SELECT `topic_id`,`name` FROM `$tablename`";
+            $results = $wpdb->get_results($sql,ARRAY_A);
+    ?>
+        <div id="s_wrapper" class="clearfix">
+        <div id="s_cm_sidebar">
+        <div class="s_subject_item">
+        <ul id="s_menu">
+        <li><label>Change Media</label>
+            <ul class="s_subjects">
+    <?php
+            foreach ($results as $index => $topic) {
+               $name = $topic['name'];
+               $id=$topic['topic_id'];
+    ?>
+        <li>
+            <input type="radio" name="topic" value="<?php echo $id; ?>" id="<?php echo $name;?>">
+            <label for="<?php echo $name;s ?>" class="subject_normal active"><?php echo $name; ?></label>
+        </li>
+    <?php
+            }
+    ?>
+            </ul>
+        </li>
+        </ul>
+    </div>
+    </div>
+    <div id="s_cm_video_area">
+    <div id="welcome" style="left:730px;top:0px;width:680px;height:400px">
+    <h1>Welcome to Change Media Showcase!</h1>
+    <p>Vibewire exists to ensure that all young people are able to have their voices heard and to provide a platform for young people to participate in the BIG conversations. Each month, we'll be delving into these discussions in our ‘Conversations that Matter’ video series.</p>
+    <p>Vibewire’s team of Video Journalists will hit the streets to find out:  Why is the issue important?  What is being done? Who does the issue impact? And, most importantly, what do YOU think?</p>
+    <p>Check out our past videos!</p>
+    <p>Want us to tell your story? Email <a href="mailto:editor@vibewire.org">editor@vibewire.org</a></p>
+    </div>
+    <div id="s_video_container">
+    <div id="s_video_subject"><div id="s_vid_sub"></div></div>
+    <div id="s_cm_video"></div>
+    </div>
+    </div>
+    </div>
+    <?php
+        }else{
+            return $text;
         }
     }
 
     function wp_vw_fastbreak($text){
-        if(get_the_title() === 'fastBREAK Showcase Test'){
+        if(get_the_title() === 'fastBREAK Showcase'){
             global $wpdb;
             $tablename = $wpdb->prefix."showcase_fb";
             $sql =
-            "SELECT `topic`,`presented_date` FROM `$tablename` ORDER BY `presented_date` DESC";
-            $data = $wpdb->get_results($sql,ARRAY_A);
+            "SELECT `topic_id`,`topic`,`presented_date` FROM `$tablename` ORDER BY `presented_date` DESC";
+            $results = $wpdb->get_results($sql,ARRAY_A);
             $year = "";
     ?>
     <div id="s_wrapper" class="clearfix">
         <div id="s_sidebar">
-            <form id="s_form_subject">
-            <input type="hidden" name="type" value="fb">
             <div class="s_subject_item">
             <ul id="s_menu">
     <?php
-            foreach ($data as $index => $theme) {
+            foreach ($results as $index => $theme) {
                 $name = $theme['topic'];
+                $id = $theme['topic_id'];
                 if($year != substr($theme['presented_date'], 0,4)){
                     if($year != ""){
                         echo "</ul></li>";
@@ -110,7 +264,7 @@ License: GPLv2
                 }
     ?>
                 <li>
-                    <input id="<?php echo $name; ?>" type="radio" class="active" name="subject" value="<?php echo $name; ?>" />
+                    <input id="<?php echo $name; ?>" type="radio" class="active" name="theme_id" value="<?php echo $id; ?>" />
                     <label class="subject_normal active" for="<?php echo $name; ?>"><?php echo substr(date("d F Y",strtotime($theme['presented_date'])), 0,6);?> : <?php echo strtoupper($name); ?></label>
                 </li>
     <?php
@@ -121,7 +275,6 @@ License: GPLv2
         </li>
         </ul>
         </div>
-        </form>
     </div>
     <div id="s_video_area">
     <div id="welcome" style="left:730px;top:0px;width:700px;height:400px">
