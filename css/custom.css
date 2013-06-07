@@ -16,4 +16,67 @@ span.required {
 hr	{
 	width: 70%;
 	margin-left: 0;
+<<<<<<< HEAD
+=======
+}
+
+div#tutorial {
+	display: none;
+	position: absolute;
+	top:10px;
+	left:200px;	
+	height: auto;
+    padding: 20px;
+    border: 2px solid #000;
+    background-color: #FFF;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    -moz-box-shadow: 0 0 14px #123;
+    -webkit-box-shadow: 0 0 14px #123;
+    box-shadow: 0 0 14px #123;
+    z-index: 5;
+    font-size: 18px;
+}
+
+#close {
+    position:absolute;
+    top:-12px;
+    right:-12px;
+    z-index:50;
+}
+
+div#image {
+	position: relative;
+	width: 650px;
+	overflow: hidden;
+	margin: 10px;
+}
+
+div#desc {
+	position: relative;
+	margin: 10px;
+}
+
+div#steps {
+	display: inline-block;
+	width: 500px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+p#step2,p#step3{
+	display: none;
+}
+
+div#desc a {
+	display: inline-block;
+	width: 33px;
+	height: 54px;
+	overflow: hidden;
+}
+
+a#next img {
+	margin-left: -35px;
+>>>>>>> 1e10557c225512145bb00400751c3cab8eb0afe5
 }

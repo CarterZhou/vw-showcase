@@ -56,6 +56,7 @@ License: GPLv2
     function showcase_admin_scripts(){
         //Link jquery-ui script to a page
         wp_enqueue_script('jquery-ui-script');
+        wp_enqueue_script('jquery-ui-draggable');
     }
 
      function showcase_admin_styles(){
@@ -299,7 +300,7 @@ License: GPLv2
         <h1>Welcome to fastBREAK showcase!</h1>
         <p><em>Produced by</em> Vibewire and the Powerhouse Museum</p>
         <p>fast<strong><em>BREAK</strong></em> is a power breakfast of insights, innovation and inspiration - it’s food for thought.</p>
-        <p>Since launching in 2010, the fast<strong><em>BREAK</strong></em> innovation series has sent a buzz through local creative and entrepreneurial communities, injecting life, inspiration and a flurry of fast<strong><em>BREAK</strong></em>ing conversation into the Powerhouse Museum. At each monthly fast<strong><em>BREAK</strong></em> session five sharp young industry leaders from various sectors tackle big questions and topics with five-minute responses around themes of creativity, commercialisation, collaboration, connections and conversation. Innovation is the staple of the fast<strong><em>BREAK</strong></em> menu.</p>
+        <p>Since launching in 2010, the fast<strong><em>BREAK</strong></em> innovation series has sent a buzz through local creative and entrepreneurial communities, injecting life, inspiration and a flurry of fast<strong><em>BREAK</strong></em>ing conversation into the Powerhouse Museum. At each month fast<strong><em>BREAK</strong></em> session five sharp young industry leaders from various sectors tackle big questions and topics with five-minute responses around themes of creativity, commercialisation, collaboration, connections and conversation. Innovation is the staple of the fast<strong><em>BREAK</strong></em> menu.</p>
         <p>The fast<strong><em>BREAK</strong></em> program showcases a diverse range of fresh perspectives from within the creative industries, including technology, design, media, science and education. Following the five back-to-back talks, participants are invited to share ideas over a delicious breakfast by Black Star Pastry, Newtown.</p>
         <p>With a focus on intergenerational exchange and dialogue, fast<strong><em>BREAK</strong></em> is a unique opportunity for conversations outside the ordinary - an opportunity for emerging young masterminds from a range of disciplines to be heard at to brush shoulders with decision-makers from corporate and non-profit organisations. </p>
 
