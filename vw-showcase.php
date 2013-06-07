@@ -33,6 +33,7 @@ License: GPLv2
         wp_register_script( 'jquery-ui-script', $plugin_url.'/js/jquery-ui-1.10.3.custom.min.js');
         // Register jquery-ui style sheet
         wp_register_style( 'jquery-ui-style', $plugin_url.'/css/ui-lightness/jquery-ui-1.10.3.custom.min.css');
+        wp_register_style('custom-ui-style',$plugin_url.'/css/custom.css');
     }
 
     function admin_vw_showcase_menu() {
@@ -41,7 +42,7 @@ License: GPLv2
         add_menu_page( 'Showcase Settings Page', 'Video Showcase', 'manage_options', 'vw-showcase.php', 'vw_showcase_settings_display_page', plugins_url('vw-showcase/images/wp-logo.png'));
         
         //create submenu items
-        $page_hook_fastbreak = add_submenu_page( 'vw-showcase.php', 'fastBREAK Settings', 'fastBREAK', 'manage_options', 'vw-showcase.php', 'admin_vw_fastbreak' );
+        $page_hook_fastbreak = add_submenu_page( 'vw-showcase.php', 'fastBREAK Settings', 'fastBREAK', 'manage_options', 'vw-fastbreak-admin.php', 'admin_vw_fastbreak' );
         $page_hook_changemedia =add_submenu_page( 'vw-showcase.php', 'Change Media Settings', 'Change Media', 'manage_options', 'vw-changemedia-admin.php', 'admin_vw_changemedia' );
 
         // Hook jquery-ui script to admin screens
@@ -60,9 +61,26 @@ License: GPLv2
      function showcase_admin_styles(){
         //Link jquery-ui style sheet to a page
         wp_enqueue_style( 'jquery-ui-style' );
+        wp_enqueue_style( 'custom-ui-style' );
     }
 
     function vw_showcase_settings_display_page(){
+    ?>
+    <div class="wrap">
+        <div id="icon-plugins" class="icon32"></div><h2><?php _e("fastBREAK/Change Media Showcase Editor" ); ?></h2>
+        <span><h3><?php  _e('Edit fastBREAK Showcase :');?></h3></span>
+        <span>
+            <a class='button-primary' href='<?php echo admin_url('admin.php')."?page=vw-fastbreak-admin.php"; ?>' title='Add an Event'>Add an Event</a>
+            <a class='button-primary' href='#' title='Update Existing Events'>Update Existing Events</a>
+        </span>
+         <span><h3><?php  _e('Edit Change Media Showcase :');?></h3></span>
+        <span>
+            <a class='button-primary' href='<?php echo admin_url('admin.php')."?page=vw-changemedia-admin.php"; ?>' title='Add a Video'>Add a Video</a>
+            <a class='button-primary' href='#' title='Update Existing Videos'>Update Existing Videos</a>
+        </span>
+    </div>
+    <?php
+
     }
 
     function admin_vw_changemedia(){

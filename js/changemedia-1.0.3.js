@@ -119,7 +119,7 @@ jQuery(document).ready(function($) {
 	$('.back2list a').live('click', function(event) {
 		event.preventDefault();
 		$that = $(this);
-		$('#s_cm_video').fadeOut(500,function(){
+		$('#s_cm_video').empty().fadeOut(500,function(){
 			$that.parent().remove();
 			$('div#s_cm_video_area').animate({height:loaded_height},800,function(){});
 			$('div.s_cm_info').fadeIn('fast');

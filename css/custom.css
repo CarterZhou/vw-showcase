@@ -1,0 +1,19 @@
+div.wrap div{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.wrap {
+	font-size: 15px;
+}
+
+span.required {
+	font-size: 18px;
+	color: red;
+	font-weight: bold;
+}
+
+hr	{
+	width: 70%;
+	margin-left: 0;
+}
