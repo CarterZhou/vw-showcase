@@ -31,6 +31,7 @@ License: GPLv2
         $plugin_url = plugins_url('',__FILE__);
         // Register jquery-ui script
         wp_register_script( 'jquery-ui-script', $plugin_url.'/js/jquery-ui-1.10.3.custom.min.js');
+        wp_register_script( 'fastbreak-admin-script', $plugin_url.'/js/admin/fastbreak-admin.js');
         // Register jquery-ui style sheet
         wp_register_style( 'jquery-ui-style', $plugin_url.'/css/ui-lightness/jquery-ui-1.10.3.custom.min.css');
         wp_register_style('custom-ui-style',$plugin_url.'/css/custom.css');
@@ -42,8 +43,8 @@ License: GPLv2
         add_menu_page( 'Showcase Settings Page', 'Video Showcase', 'manage_options', 'vw-showcase.php', 'vw_showcase_settings_display_page', plugins_url('vw-showcase/images/wp-logo.png'));
         
         //create submenu items
-        $page_hook_fastbreak = add_submenu_page( 'vw-showcase.php', 'fastBREAK Settings', 'fastBREAK', 'manage_options', 'vw-fastbreak-admin.php', 'admin_vw_fastbreak' );
-        $page_hook_changemedia =add_submenu_page( 'vw-showcase.php', 'Change Media Settings', 'Change Media', 'manage_options', 'vw-changemedia-admin.php', 'admin_vw_changemedia' );
+        $page_hook_fastbreak = add_submenu_page( 'vw-showcase.php', 'fastBREAK Add/Update', 'fastBREAK - Add/Update', 'manage_options', 'vw-fastbreak-admin.php', 'vw_fastbreak_admin' );
+        $page_hook_changemedia =add_submenu_page( 'vw-showcase.php', 'Change Media Add/Update', 'Change Media - Add/Update', 'manage_options', 'vw-changemedia-admin.php', 'vw_changemedia_admin' );
 
         // Hook jquery-ui script to admin screens
         add_action( 'admin_print_scripts-'.$page_hook_fastbreak,'showcase_admin_scripts' );
@@ -57,6 +58,8 @@ License: GPLv2
         //Link jquery-ui script to a page
         wp_enqueue_script('jquery-ui-script');
         wp_enqueue_script('jquery-ui-draggable');
+        //Link fastbreak admin script to a page
+        wp_enqueue_script('fastbreak-admin-script');
     }
 
      function showcase_admin_styles(){
@@ -84,11 +87,11 @@ License: GPLv2
 
     }
 
-    function admin_vw_changemedia(){
+    function vw_changemedia_admin(){
         include("vw-changemedia-admin.php");
     }
 
-     function admin_vw_fastbreak(){
+     function vw_fastbreak_admin(){
          include("vw-fastbreak-admin.php");
     }
 
