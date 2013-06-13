@@ -40,18 +40,19 @@ License: GPLv2
     function admin_vw_showcase_menu() {
 
         //create custom top-level menus
-        add_menu_page( 'Showcase Settings Page', 'Video Showcase', 'manage_options', 'vw-showcase.php', 'vw_showcase_settings_display_page', plugins_url('vw-showcase/images/wp-logo.png'));
+        add_menu_page( 'Showcase Settings Page', 'Video Showcase', 'manage_showcase', 'vw-showcase.php', 'vw_showcase_settings_display_page', plugins_url('vw-showcase/images/wp-logo.png'));
         
         //create submenu items
-        $page_hook_fastbreak = add_submenu_page( 'vw-showcase.php', 'fastBREAK Add/Update', 'fastBREAK - Add/Update', 'manage_options', 'vw-fastbreak-admin.php', 'vw_fastbreak_admin' );
-        $page_hook_changemedia =add_submenu_page( 'vw-showcase.php', 'Change Media Add/Update', 'Change Media - Add/Update', 'manage_options', 'vw-changemedia-admin.php', 'vw_changemedia_admin' );
+        $page_hook_fastbreak_add = add_submenu_page( 'vw-showcase.php', 'fastBREAK-Add/Update', 'fastBREAK - Add/Update', 'manage_showcase', 'vw-fastbreak-admin.php', 'vw_fastbreak_admin_add' );
+        $page_hook_fastbreak_list = add_submenu_page( 'vw-showcase.php', 'fastBREAK-List', 'fastBREAK - List', 'manage_showcase', 'vw-fastbreak-list-admin.php', 'vw_fastbreak_admin_list' );
+        $page_hook_changemedia_add =add_submenu_page( 'vw-showcase.php', 'Change Media-Add/Update', 'Change Media - Add/Update', 'manage_showcase', 'vw-changemedia-admin.php', 'vw_changemedia_admin' );
 
         // Hook jquery-ui script to admin screens
-        add_action( 'admin_print_scripts-'.$page_hook_fastbreak,'showcase_admin_scripts' );
-        add_action( 'admin_print_scripts-'.$page_hook_changemedia,'showcase_admin_scripts' );
+        add_action( 'admin_print_scripts-'.$page_hook_fastbreak_add,'showcase_admin_scripts' );
+        add_action( 'admin_print_scripts-'.$page_hook_changemedia_add,'showcase_admin_scripts' );
         // Hook jquery-ui style sheet to admin screens
-        add_action( 'admin_print_styles-' . $page_hook_fastbreak, 'showcase_admin_styles' );
-        add_action( 'admin_print_styles-' . $page_hook_changemedia, 'showcase_admin_styles' );
+        add_action( 'admin_print_styles-' . $page_hook_fastbreak_add, 'showcase_admin_styles' );
+        add_action( 'admin_print_styles-' . $page_hook_changemedia_add, 'showcase_admin_styles' );
     }
 
     function showcase_admin_scripts(){
@@ -59,7 +60,7 @@ License: GPLv2
         wp_enqueue_script('jquery-ui-script');
         wp_enqueue_script('jquery-ui-draggable');
         //Link fastbreak admin script to a page
-        wp_enqueue_script('fastbreak-admin-script');
+        // wp_enqueue_script('fastbreak-admin-script');
     }
 
      function showcase_admin_styles(){
@@ -75,7 +76,7 @@ License: GPLv2
         <span><h3><?php  _e('Edit fastBREAK Showcase :');?></h3></span>
         <span>
             <a class='button-primary' href='<?php echo admin_url('admin.php')."?page=vw-fastbreak-admin.php"; ?>' title='Add an Event'>Add an Event</a>
-            <a class='button-primary' href='#' title='Update Existing Events'>Update Existing Events</a>
+            <a class='button-primary' href='<?php echo admin_url('admin.php')."?page=vw-fastbreak-list-admin.php"; ?>' title='Update Existing Events'>Update Existing Events</a>
         </span>
          <span><h3><?php  _e('Edit Change Media Showcase :');?></h3></span>
         <span>
@@ -91,8 +92,12 @@ License: GPLv2
         include("vw-changemedia-admin.php");
     }
 
-     function vw_fastbreak_admin(){
-         include("vw-fastbreak-admin.php");
+    function vw_fastbreak_admin_add(){
+        include("vw-fastbreak-admin.php");
+    }
+
+    function vw_fastbreak_admin_list(){
+        include("vw-fastbreak-list-admin.php");
     }
 
 

@@ -26,8 +26,12 @@
             if(!/^(http:\/\/vibewire\.org\/\d{4}\/\d{2}\/[a-z1-9-]+\/)$/.test($('#vw_fb_review').val().trim())){
                 err_message += 'Review link does not match the specified format\n';
             }
-            // Validate names of speakers
+
             var speakers = $("input[name='vw_fb_speaker\\[\\]']");
+            if(speakers.length == 0){
+                err_message += 'No information of speakers is provided.';
+            }
+            //Validate names of speakers
             for (var i = 1; i <= speakers.length; i++) {
                 var name = $(speakers[i-1]).val().trim();
                 if(name == ''){
@@ -59,6 +63,10 @@
                 alert(err_message);
                 return false;
             }
+        });
+
+        $('#remove_speaker').click(function(event) {
+            $('#speakers div').last().fadeOut('800',function(){$(this).remove();});
         });
 
         $('#add_speaker').click(function(event) {

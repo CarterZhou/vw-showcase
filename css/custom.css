@@ -7,8 +7,15 @@ div.wrap {
 	font-size: 15px;
 }
 
-span.required {
+span.required{
 	font-size: 18px;
+	color: red;
+	font-weight: bold;
+}
+
+span.vw_error {
+	display: block;
+	font-size: 15px;
 	color: red;
 	font-weight: bold;
 }
