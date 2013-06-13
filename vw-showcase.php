@@ -19,6 +19,8 @@ License: GPLv2
     add_action('wp_ajax_fastbreak_speakers','fastbreak_speakers');
     add_action('wp_ajax_nopriv_fastbreak_info','fastbreak_info');
     add_action('wp_ajax_fastbreak_info','fastbreak_info');
+    // Handle Ajax calls from fastbreak showcase admin page
+    add_action('wp_ajax_fastbreak_delete','fastbreak_delete');
 
     // Handle Ajax calls from change media showcase page
     add_action('wp_ajax_nopriv_changemedia_videos','changemedia_videos');
@@ -32,6 +34,7 @@ License: GPLv2
         // Register jquery-ui script
         wp_register_script( 'jquery-ui-script', $plugin_url.'/js/jquery-ui-1.10.3.custom.min.js');
         wp_register_script( 'fastbreak-admin-script', $plugin_url.'/js/admin/fastbreak-admin.js');
+        wp_localize_script( 'fastbreak-admin-script', 'plugin_object',array('plugin_url' => plugins_url('',__FILE__)));
         // Register jquery-ui style sheet
         wp_register_style( 'jquery-ui-style', $plugin_url.'/css/ui-lightness/jquery-ui-1.10.3.custom.min.css');
         wp_register_style('custom-ui-style',$plugin_url.'/css/custom.css');
@@ -60,7 +63,7 @@ License: GPLv2
         wp_enqueue_script('jquery-ui-script');
         wp_enqueue_script('jquery-ui-draggable');
         //Link fastbreak admin script to a page
-        // wp_enqueue_script('fastbreak-admin-script');
+        wp_enqueue_script('fastbreak-admin-script');
     }
 
      function showcase_admin_styles(){
@@ -100,6 +103,20 @@ License: GPLv2
         include("vw-fastbreak-list-admin.php");
     }
 
+    function fastbreak_delete(){
+        global $wpdb;
+        $t_fb_speakers = $wpdb->prefix."showcase_fb_speakers";
+        $id = intval($_POST['details_id']);
+        $data = array();
+        $result= $wpdb->query($wpdb->prepare( 
+                            "DELETE FROM $t_fb_speakers
+                             WHERE details_id = %d
+                            ",$id)
+                    );
+        $data['affected'] = $result;
+        echo json_encode($data);
+        die();
+    }
 
      // Get information of a particular theme
     function fastbreak_info(){

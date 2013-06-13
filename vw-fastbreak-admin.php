@@ -1,130 +1,91 @@
 <?php
-    $errors = array();
-    $user_input = array();
+    require_once(dirname(__FILE__).'/inc/showcase-manager.class.php');
+    $manager = new ShowcaseManager();
     // Retrieve data of a fastBREAK event based on the given ID.
     if(isset($_GET) && !empty($_GET['fb_id'])){
         if(current_user_can('manage_showcase')){
-            global $wpdb;
-            $t_fb = $wpdb->prefix."showcase_fb";
-            $t_fb_speakers = $wpdb->prefix."showcase_fb_speakers";
-            $id = intval($_GET['fb_id']);
-            $data = array();
-            $sql = "SELECT `speaker`,`youtube_link`,`review_link`,`topic`,`intro`,`presented_date`
-                    FROM `$t_fb`,`$t_fb_speakers`
-                    WHERE $t_fb.topic_id = $t_fb_speakers.topic_id AND $t_fb.topic_id=$id"; 
-            $results = $wpdb->get_results($sql,ARRAY_A);
-            if($wpdb->num_rows){
-                $data['vw_fb_theme'] = $results[0]['topic'];
-                $data['vw_fb_review'] = $results[0]['review_link'];
-                $data['vw_fb_intro'] = $results[0]['intro'];
-                $data['vw_fb_date'] = $results[0]['presented_date'];
-                foreach ($results as $index => $value) {
-                    $data['vw_fb_link'][$index] = $results[$index]['youtube_link'];
-                    $data['vw_fb_speaker'][$index] = $results[$index]['speaker'];
-                }
-            }
-            $user_input = $data;
+            $manager->fastbreak_get_one($_GET['fb_id']);
         }
     }
-    // Save a new fastBREAK event
+    // Save a new fastBREAK event.
     if(isset($_POST) && !empty($_POST)){
-        $user_input = $_POST;
-        require_once(dirname(__FILE__).'/inc/validation.php');
-        // Check user's capability and make sure there are no errors in user input
-        if(current_user_can('manage_showcase') && sizeof($errors)==0){
-            global $wpdb;
-            $table_fb = $wpdb->prefix."showcase_fb";
-            // Sanitize the introduction of event
-            $intro = htmlentities(wp_strip_all_tags($_POST['vw_fb_intro']));
-            $values = array( 
-                        'topic' => $_POST['vw_fb_theme'], 
-                        'review_link' => $_POST['vw_fb_review'],
-                        'intro' => $_POST['vw_fb_intro'],
-                        'presented_date'=> $_POST['vw_fb_date']
-                    );
-            if($wpdb->insert($table_fb,$values)){
-                $inserted_id = $wpdb->insert_id;
-                $table_fb = $wpdb->prefix."showcase_fb_speakers";
-                for ($i=0; $i < count($_POST['vw_fb_speaker']); $i++) { 
-                     $values = array( 
-                        'topic_id' => $inserted_id, 
-                        'youtube_link' => $_POST['vw_fb_link'][$i],
-                        'speaker' => $_POST['vw_fb_speaker'][$i]
-                    );
-                    $wpdb->insert($table_fb,$values);
-                }
+        $manager->user_input = $_POST;
+        $manager->validate();
+        // Check user's capability and make sure there are no errors in user input.
+        if(current_user_can('manage_showcase') && sizeof($manager->errors)==0){
+            // Save event and notify whether it succceeds or not,
+            if($manager->fastbreak_add_or_update()){
+                echo '<div class="updated highlight">';
+                echo '</p>Updated Successfully!</p>';
+                echo '</p>You will be redirected in 3 seconds</p>';
+                echo '</div>';
+                echo '<script type="text/javascript">';
+                echo 'setTimeout(function(){window.location="'.admin_url( 'admin.php?page=vw-fastbreak-list-admin.php').'";},3000);s';
+                echo '</script>';
+            }else{
+                echo '<div class="error highlight">';
+                echo '</p>Failed to Update!</p>';
+                echo '</p>Please make sure your input conforms to specified format.</p>';
+                echo '</p>You will be redirected in 3 seconds</p>';
+                echo '</div>';
+                echo '<script type="text/javascript">';
+                echo 'setTimeout(function(){window.location="'.admin_url( 'admin.php?page=vw-fastbreak-list-admin.php').'";},3000);s';
+                echo '</script>';
             }
-            // Redirection
-            echo '<div class="updated">';
-            echo '</p>New Event Added!</p>';
-            echo '</p>Redirected in 3 seconds</p>';
-            echo '</div>';
-            echo '<script type="text/javascript">';
-            echo 'setTimeout(function(){window.location="'.admin_url( 'admin.php?page=vw-fastbreak-list-admin.php').'";},3000);s';
-            echo '</script>';
             die();
         }
     }
 ?>
 <div class="wrap">  
-    <h2><?php _e( 'fastBREAK Event Info'); ?></h2>
+    <h2><?php _e( 'Add/Update fastBREAK Event'); ?></h2>
     <h3><?php _e( 'General Information'); ?></h3>
-    <form id="vw_fb_form" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">  
+    <form id="vw_fb_form" method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+         <input type="hidden" id="vw_fb_id" name="vw_fb_id" value="<?php echo $manager->user_input['vw_fb_id']?>">  
          <div>
-            <span class="vw_error"><?php if(isset($errors['theme'])){echo 'Error : '.$errors['theme'];}?></span>
-            <span class="required">* </span><?php _e("Theme: " ); ?><input type="text" id="vw_fb_theme" name="vw_fb_theme" value="<?php echo $user_input['vw_fb_theme']; ?>" size="20"><?php _e(" example: YOUTH" ); ?>
+            <span class="vw_error"><?php if(isset($manager->errors['theme'])){echo 'Error : '.$manager->errors['theme'];}?></span>
+            <span class="required">* </span><?php _e("Theme: " ); ?><input type="text" id="vw_fb_theme" name="vw_fb_theme" value="<?php echo $manager->user_input['vw_fb_theme']; ?>" size="20"><?php _e(" example: YOUTH" ); ?>
         </div> 
         <div>
-            <span class="vw_error"><?php if(isset($errors['date'])){echo 'Error : '.$errors['date'];}?></span>
-            <span class="required">* </span><?php _e("Presented Date: " ); ?><input type="text" placeholder="event date" id="vw_fb_date" name="vw_fb_date" value="<?php echo $user_input['vw_fb_date']; ?>" size="20"><?php _e(" example: 2012-12-22" ); ?>
+            <span class="vw_error"><?php if(isset($manager->errors['date'])){echo 'Error : '.$manager->errors['date'];}?></span>
+            <span class="required">* </span><?php _e("Presented Date: " ); ?><input type="text" placeholder="event date" id="vw_fb_date" name="vw_fb_date" value="<?php echo $manager->user_input['vw_fb_date']; ?>" size="20"><?php _e(" example: 2012-12-22" ); ?>
         </div>  
         <div>
-            <span class="vw_error"><?php if(isset($errors['review'])){echo 'Error : '.$errors['review'];}?></span>
-            <span class="required">* </span><?php _e("Textual Review Link: " ); ?><input placeholder="http://" type="text" id="vw_fb_review" name="vw_fb_review" value="<?php echo $user_input['vw_fb_review']; ?>" size="50"><?php _e(" example: http://vibewire.org/2012/07/fastbreak-lies-review/" ); ?> 
+            <span class="vw_error"><?php if(isset($manager->errors['review'])){echo 'Error : '.$manager->errors['review'];}?></span>
+            <span class="required">* </span><?php _e("Textual Review Link: " ); ?><input placeholder="http://" type="text" id="vw_fb_review" name="vw_fb_review" value="<?php echo $manager->user_input['vw_fb_review']; ?>" size="50"><?php _e(" example: http://vibewire.org/2012/07/fastbreak-lies-review/" ); ?> 
         </div>
         <p><?php _e("Intro: " ); ?></p>
         <div>
-            <textarea name="vw_fb_intro" id="vw_fb_intro" cols="100" rows="5" placeholder="Type the introduction of theme here..."><?php echo $user_input['vw_fb_intro']; ?></textarea>
+            <textarea name="vw_fb_intro" id="vw_fb_intro" cols="100" rows="5" placeholder="Type the introduction of theme here..."><?php echo $manager->user_input['vw_fb_intro']; ?></textarea>
         </div>
         <hr>
         <span class="required">* </span><h3 style="display:inline"><?php _e( 'Speakers Information'); ?></h3>
+        <div><h3><a class="how" href='#' title='FAQ'>How to Get Youtube Links?</a></h3></div>
         <div id="speakers">
-            <div>
-                <span class="vw_error"><?php if(isset($errors['name'][0])){echo 'Error : '.$errors['name'][0];}?></span>
-                <span class="vw_error"><?php if(isset($errors['link'][0])){echo 'Error : '.$errors['link'][0];}?></span>
-                <?php _e("Name: " ); ?><input type="text" class="vw_fb_speaker" name="vw_fb_speaker[]" value="<?php echo $user_input['vw_fb_speaker'][0]; ?>" size="20">&nbsp;&nbsp;&nbsp;
-                <?php _e("Youtube Link: " ); ?><input type="text" placeholder="http://www.youtube.com/embed/9bZkp7q19f0" class="youtube_link" name="vw_fb_link[]" value="<?php echo $user_input['vw_fb_link'][0]; ?>" size="40">
-                <a class="how" href='#' title='FAQ'>How to Get This?</a>
-            </div>
-            <div>
-                <span class="vw_error"><?php if(isset($errors['name'][1])){echo 'Error : '.$errors['name'][1];}?></span>
-                <span class="vw_error"><?php if(isset($errors['link'][1])){echo 'Error : '.$errors['link'][1];}?></span>
-                <?php _e("Name: " ); ?><input type="text" class="vw_fb_speaker" name="vw_fb_speaker[]" value="<?php echo $user_input['vw_fb_speaker'][1]; ?>" size="20">&nbsp;&nbsp;&nbsp;
-                <?php _e("Youtube Link: " ); ?><input type="text" class="youtube_link" name="vw_fb_link[]" value="<?php echo $user_input['vw_fb_link'][1]; ?>" size="40">
-            </div>
-            <div>
-                <span class="vw_error"><?php if(isset($errors['name'][2])){echo 'Error : '.$errors['name'][2];}?></span>
-                <span class="vw_error"><?php if(isset($errors['link'][2])){echo 'Error : '.$errors['link'][2];}?></span>
-                <?php _e("Name: " ); ?><input type="text" class="vw_fb_speaker" name="vw_fb_speaker[]" value="<?php echo $user_input['vw_fb_speaker'][2]; ?>" size="20">&nbsp;&nbsp;&nbsp;
-                <?php _e("Youtube Link: " ); ?><input type="text" class="youtube_link" name="vw_fb_link[]" value="<?php echo $user_input['vw_fb_link'][2]; ?>" size="40">
-            </div>
-            <div>
-                <span class="vw_error"><?php if(isset($errors['name'][3])){echo 'Error : '.$errors['name'][3];}?></span>
-                <span class="vw_error"><?php if(isset($errors['link'][3])){echo 'Error : '.$errors['link'][3];}?></span>
-                <?php _e("Name: " ); ?><input type="text" class="vw_fb_speaker" name="vw_fb_speaker[]" value="<?php echo $user_input['vw_fb_speaker'][3]; ?>" size="20">&nbsp;&nbsp;&nbsp;
-                <?php _e("Youtube Link: " ); ?><input type="text" class="youtube_link" name="vw_fb_link[]" value="<?php echo $user_input['vw_fb_link'][3]; ?>" size="40">
-            </div>
+            <?php  
+                if(isset($manager->user_input['vw_fb_speaker']) && sizeof($manager->user_input['vw_fb_speaker'])>0){
+                    $loop_count = sizeof($manager->user_input['vw_fb_speaker']);
+                }else{
+                    $loop_count = 4;
+                }
+                for ($i=0; $i < $loop_count; $i++) {
+                
+            ?>
              <div>
-                <span class="vw_error"><?php if(isset($errors['name'][4])){echo 'Error : '.$errors['name'][4];}?></span>
-                <span class="vw_error"><?php if(isset($errors['link'][4])){echo 'Error : '.$errors['link'][4];}?></span>
-                <?php _e("Name: " ); ?><input type="text" class="vw_fb_speaker" name="vw_fb_speaker[]" value="<?php echo $user_input['vw_fb_speaker'][4]; ?>" size="20">&nbsp;&nbsp;&nbsp;
-                <?php _e("Youtube Link: " ); ?><input type="text" class="youtube_link" name="vw_fb_link[]" value="<?php echo $user_input['vw_fb_link'][4]; ?>" size="40">
+                <span class="vw_error"><?php if(isset($manager->errors['name'][$i])){echo 'Error : '.$manager->errors['name'][$i];}?></span>
+                <span class="vw_error"><?php if(isset($manager->errors['link'][$i])){echo 'Error : '.$manager->errors['link'][$i];}?></span>
+                <input type="hidden" name="vw_fb_did[]" value="<?php if(isset($manager->user_input['vw_fb_did'][$i])){echo $manager->user_input['vw_fb_did'][$i];}?>">
+                <?php _e("Name: " ); ?><input type="text" class="vw_fb_speaker" name="vw_fb_speaker[]" value="<?php if(isset($manager->user_input['vw_fb_speaker'][$i])){echo $manager->user_input['vw_fb_speaker'][$i];} ?>" size="20">&nbsp;&nbsp;&nbsp;
+                <?php _e("Youtube Link: " ); ?><input type="text" class="youtube_link" name="vw_fb_link[]" value="<?php if(isset($manager->user_input['vw_fb_link'][$i])){echo $manager->user_input['vw_fb_link'][$i];} ?>" size="40">
+                <a href="#" title="Delete" class="delete"><?php _e("Delete permanently" );?></a>
             </div>
+            <?php 
+                }
+            ?>
         </div>
-        <input type="button" id="add_speaker" class="button-secondary" value="<?php _e('Add a Speaker'); ?>" />
-        <input type="button" id="remove_speaker" class="button-secondary" value="<?php _e('Remove a Speaker'); ?>" />
+        <input type="button" id="add_speaker" class="button-secondary" value="<?php _e('Add'); ?>" />
+        <input type="button" id="remove_speaker" class="button-secondary" value="<?php _e('Remove'); ?>" />
         <hr>
-        <input type="submit" class="button-primary" name="add_event" value="Add an Event">
+        <input type="submit" class="button-primary" name="add_event" value="Add / Update">
     </form> 
 </div>
 <div id="tutorial">
@@ -146,4 +107,5 @@
             </a>
         </div>
     </div>
+<div class="vw_loading"></div>
 <div class="overlay"></div>

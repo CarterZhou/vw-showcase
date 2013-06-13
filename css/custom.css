@@ -25,6 +25,20 @@ hr	{
 	margin-left: 0;
 }
 
+div.vw_loading {
+	display: none;
+	position: absolute;
+	height: auto;
+    border: 2px solid black;
+    background-color: #FFF;
+    z-index: 99;
+    font-size: 18px;
+}
+
+div.vw_loading p{
+	padding: 10px;
+}
+
 div#tutorial {
 	display: none;
 	position: absolute;
@@ -83,4 +97,16 @@ div#desc a {
 
 a#next img {
 	margin-left: -35px;
+}
+
+div.overlay {
+	display: none;		
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    z-index: 4;
 }

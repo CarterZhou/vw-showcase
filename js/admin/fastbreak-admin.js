@@ -65,6 +65,44 @@
             }
         });
 
+        $('a.delete').click(function(event) {
+            event.preventDefault();
+            var yes = window.confirm("Cannot recover once deleted. Are you sure to proceed?");
+            if(yes){
+                $('.overlay').fadeIn('800');
+                $img = $('<img>').attr('src', plugin_object.plugin_url+'/images/loading.gif');
+                $('div.vw_loading').css({
+                    top: '50%',
+                    left: '40%'
+                }).append($img).fadeIn('1000');
+                var did = parseInt($(this).siblings('input[type=hidden]').val());
+                var data = {
+                    action : 'fastbreak_delete',
+                    details_id : did
+                };
+                $that = $(this);
+
+                jQuery.post(ajaxurl, data, function(data, textStatus, xhr) {
+                    $loading = $('div.vw_loading');
+                    $loading.empty();
+                    var result = JSON.parse(data);
+                    if(result.affected === false){
+                        $loading.html('<p>Failed to delete!</p>');
+                    }else if(result.affected > 0){
+                        $loading.html('<p>Successfully Deleted!</p>');
+                    }
+                    setTimeout(function(){
+                        $loading.empty().fadeOut('fast',function(){
+                            $('.overlay').fadeOut('fast');
+                        });
+                        $that.parent().fadeOut('1000',function(){
+                            $that.parent().remove();
+                        });
+                    },1500);
+                });
+            }
+        });
+
         $('#remove_speaker').click(function(event) {
             $('#speakers div').last().fadeOut('800',function(){$(this).remove();});
         });
