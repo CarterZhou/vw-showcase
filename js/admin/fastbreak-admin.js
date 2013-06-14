@@ -1,7 +1,8 @@
  jQuery(document).ready(function($) {
+        
+        $('#tutorial').draggable();
         $('#vw_fb_date').datepicker({changeYear:true,changeMonth:true});
         $('#vw_fb_date').datepicker( "option", "dateFormat", "yy-mm-dd" );
-        $('#tutorial').draggable();
         
         function validate(){
             var err_message = '';
@@ -20,10 +21,7 @@
                 err_message += 'Date does not match the specified format\n';
             }
             // Validate review link
-            if($('#vw_fb_review').val().trim() == ''){
-                err_message += 'Review link is empty\n';
-            }
-            if(!/^(http:\/\/vibewire\.org\/\d{4}\/\d{2}\/[a-z1-9-]+\/)$/.test($('#vw_fb_review').val().trim())){
+            if($('#vw_fb_review').val().trim() != '' && !/^(http:\/\/vibewire\.org\/[a-z1-9-]+\/)$/.test($('#vw_fb_review').val().trim())){
                 err_message += 'Review link does not match the specified format\n';
             }
 

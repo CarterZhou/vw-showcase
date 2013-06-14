@@ -10,29 +10,47 @@ class ShowcaseManager
     public $errors;
     // An array used to save user input.
     public $user_input;
-    // An array used to save a list of events/videos
-    public $list;
+    // An array used to save a list of events/videos.
+    public $data;
+    // An instance of Pagination class that helps paginate event list.
+    public $pagination;
 
     function __construct(){
         $errors = array();
         $user_input = array();
-        $list = array();
+        $data = array();
     }
 
-    function fastbreak_get_all(){
+    function fastbreak_delete_speaker(){
+        global $wpdb;
+        $t_fb_speakers = $wpdb->prefix."showcase_fb_speakers";
+        $id = intval($_POST['details_id']);
+        $result= $wpdb->query($wpdb->prepare("DELETE FROM $t_fb_speakers WHERE details_id = %d",$id));
+        return $result;
+    }
+
+    function fastbreak_get_some($current_page = 1){
         global $wpdb;
         $t_fb = $wpdb->prefix."showcase_fb";
+        // Count how many records in the table.
+        $sql = "SELECT count(`topic_id`) AS `how_many` FROM $t_fb";
+        $results = $wpdb->get_row($sql,ARRAY_A);
+        $num_of_records = $results['how_many'];
+        // Initialise a pagination object.
+        require_once(dirname(__FILE__).'/pagination.class.php');
+        $this->pagination = new Pagination($current_page,$num_of_records);
+        // Select a set of records according to current page.
         $sql = "SELECT `topic_id`,`review_link`,`topic`,`presented_date`
                 FROM `$t_fb`
                 ORDER BY `presented_date` DESC
-                LIMIT 0,10"; 
+                LIMIT {$this->pagination->get_offset()},{$this->pagination->get_records_per_page()}";
         $results = $wpdb->get_results($sql,ARRAY_A);
         if($wpdb->num_rows){
              for ($i=0; $i < $wpdb->num_rows; $i++) {
-                $this->list[$i]['topic_id'] = $results[$i]['topic_id'];
-                $this->list[$i]['topic'] = $results[$i]['topic'];
-                $this->list[$i]['review_link'] = $results[$i]['review_link'];
-                $this->list[$i]['presented_date'] = $results[$i]['presented_date'];
+                $this->data[$i]['topic_id'] = $results[$i]['topic_id'];
+                $this->data[$i]['topic'] = $results[$i]['topic'];
+                $this->data[$i]['review_link'] = $results[$i]['review_link'];
+                $this->data[$i]['presented_date'] = $results[$i]['presented_date'];
             }
         }
     }
@@ -61,7 +79,7 @@ class ShowcaseManager
                     $data['vw_fb_speaker'][$index] = $results[$index]['speaker'];
                 }
             }
-            $this->user_input = $data;
+            $this->data = $data;
         }
     }
 
@@ -122,6 +140,7 @@ class ShowcaseManager
 
     function validate(){
         $input = $this->user_input;
+        // Validate theme name
         if(isset($input['vw_fb_theme']) && !empty($input['vw_fb_theme'])){
             if(preg_match('/[^a-z ]+/i', $input['vw_fb_theme']) === 1){
                 $this->errors['theme'] = 'Name of theme does not match the specified format';
@@ -137,13 +156,11 @@ class ShowcaseManager
         }else{
             $this->errors['date'] = 'Date is empty';
         }
-        // Validate date
+        // Validate review link
         if(isset($input['vw_fb_review']) && !empty($input['vw_fb_review'])){
-            if(preg_match('/^(http:\/\/vibewire\.org\/\d{4}\/\d{2}\/[a-z1-9-]+\/)$/', $input['vw_fb_review']) === 0){
+            if(preg_match('/^(http:\/\/vibewire\.org\/[a-z1-9-]+\/)$/', $input['vw_fb_review']) === 0){
                 $this->errors['review'] = 'Review link does not match the specified format';
             }
-        }else{
-            $this->errors['review'] = 'Review link is empty';
         }
         //Validate names of speakers
         if(isset($input['vw_fb_speaker']) && !empty($input['vw_fb_speaker'])){

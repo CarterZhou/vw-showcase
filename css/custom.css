@@ -7,6 +7,14 @@ div.wrap {
 	font-size: 15px;
 }
 
+.tablenav .tablenav-pages{
+	float: left;
+}
+
+.tablenav .tablenav-pages .displaying-num{
+	font-size: 18px;
+}
+
 span.required{
 	font-size: 18px;
 	color: red;
@@ -98,6 +106,11 @@ div#desc a {
 a#next img {
 	margin-left: -35px;
 }
+
+a.page {
+	text-decoration: none;
+}
+
 
 div.overlay {
 	display: none;		

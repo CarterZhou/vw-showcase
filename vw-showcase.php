@@ -56,6 +56,8 @@ License: GPLv2
         // Hook jquery-ui style sheet to admin screens
         add_action( 'admin_print_styles-' . $page_hook_fastbreak_add, 'showcase_admin_styles' );
         add_action( 'admin_print_styles-' . $page_hook_changemedia_add, 'showcase_admin_styles' );
+        add_action( 'admin_print_styles-' . $page_hook_fastbreak_list, 'showcase_admin_styles' );
+        
     }
 
     function showcase_admin_scripts(){
@@ -70,6 +72,7 @@ License: GPLv2
         //Link jquery-ui style sheet to a page
         wp_enqueue_style( 'jquery-ui-style' );
         wp_enqueue_style( 'custom-ui-style' );
+        wp_enqueue_style( 'colors-fresh' );
     }
 
     function vw_showcase_settings_display_page(){
@@ -104,16 +107,10 @@ License: GPLv2
     }
 
     function fastbreak_delete(){
-        global $wpdb;
-        $t_fb_speakers = $wpdb->prefix."showcase_fb_speakers";
-        $id = intval($_POST['details_id']);
+        require_once(dirname(__FILE__).'/inc/showcase-manager.class.php');
+        $manager = new ShowcaseManager();
         $data = array();
-        $result= $wpdb->query($wpdb->prepare( 
-                            "DELETE FROM $t_fb_speakers
-                             WHERE details_id = %d
-                            ",$id)
-                    );
-        $data['affected'] = $result;
+        $data['affected'] = $manager->fastbreak_delete_speaker();
         echo json_encode($data);
         die();
     }

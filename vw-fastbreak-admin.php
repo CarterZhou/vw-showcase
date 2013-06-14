@@ -5,6 +5,7 @@
     if(isset($_GET) && !empty($_GET['fb_id'])){
         if(current_user_can('manage_showcase')){
             $manager->fastbreak_get_one($_GET['fb_id']);
+            $manager->user_input = $manager->data;
         }
     }
     // Save a new fastBREAK event.
@@ -47,11 +48,11 @@
         </div> 
         <div>
             <span class="vw_error"><?php if(isset($manager->errors['date'])){echo 'Error : '.$manager->errors['date'];}?></span>
-            <span class="required">* </span><?php _e("Presented Date: " ); ?><input type="text" placeholder="event date" id="vw_fb_date" name="vw_fb_date" value="<?php echo $manager->user_input['vw_fb_date']; ?>" size="20"><?php _e(" example: 2012-12-22" ); ?>
+            <span class="required">* </span><?php _e("Presented Date: " ); ?><input type="text" placeholder="event date" id="vw_fb_date" readonly="readonly" name="vw_fb_date" value="<?php echo $manager->user_input['vw_fb_date']; ?>" size="20"><?php _e(" example: 2012-12-22" ); ?>
         </div>  
         <div>
             <span class="vw_error"><?php if(isset($manager->errors['review'])){echo 'Error : '.$manager->errors['review'];}?></span>
-            <span class="required">* </span><?php _e("Textual Review Link: " ); ?><input placeholder="http://" type="text" id="vw_fb_review" name="vw_fb_review" value="<?php echo $manager->user_input['vw_fb_review']; ?>" size="50"><?php _e(" example: http://vibewire.org/2012/07/fastbreak-lies-review/" ); ?> 
+            <?php _e("Textual Review Link: " ); ?><input placeholder="http://" type="text" id="vw_fb_review" name="vw_fb_review" value="<?php echo $manager->user_input['vw_fb_review']; ?>" size="50"><?php _e(" example: http://vibewire.org/2012/07/fastbreak-lies-review/" ); ?> 
         </div>
         <p><?php _e("Intro: " ); ?></p>
         <div>
@@ -76,9 +77,14 @@
                 <input type="hidden" name="vw_fb_did[]" value="<?php if(isset($manager->user_input['vw_fb_did'][$i])){echo $manager->user_input['vw_fb_did'][$i];}?>">
                 <?php _e("Name: " ); ?><input type="text" class="vw_fb_speaker" name="vw_fb_speaker[]" value="<?php if(isset($manager->user_input['vw_fb_speaker'][$i])){echo $manager->user_input['vw_fb_speaker'][$i];} ?>" size="20">&nbsp;&nbsp;&nbsp;
                 <?php _e("Youtube Link: " ); ?><input type="text" class="youtube_link" name="vw_fb_link[]" value="<?php if(isset($manager->user_input['vw_fb_link'][$i])){echo $manager->user_input['vw_fb_link'][$i];} ?>" size="40">
+            <?php  
+                    if(isset($manager->data['vw_fb_speaker'][$i])){
+            ?>
                 <a href="#" title="Delete" class="delete"><?php _e("Delete permanently" );?></a>
-            </div>
+            
             <?php 
+                    }
+                    echo "</div>";
                 }
             ?>
         </div>
