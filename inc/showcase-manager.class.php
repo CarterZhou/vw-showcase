@@ -142,7 +142,7 @@ class ShowcaseManager
         $input = $this->user_input;
         // Validate theme name
         if(isset($input['vw_fb_theme']) && !empty($input['vw_fb_theme'])){
-            if(preg_match('/[^a-z ]+/i', $input['vw_fb_theme']) === 1){
+            if(preg_match('/[^a-z -]+/i', $input['vw_fb_theme']) === 1){
                 $this->errors['theme'] = 'Name of theme does not match the specified format';
             }
         }else{
@@ -158,7 +158,7 @@ class ShowcaseManager
         }
         // Validate review link
         if(isset($input['vw_fb_review']) && !empty($input['vw_fb_review'])){
-            if(preg_match('/^(http:\/\/vibewire\.org\/[a-z1-9-]+\/)$/', $input['vw_fb_review']) === 0){
+            if(preg_match('/^(http:\/\/vibewire\.org\/(\d{4}\/\d{2}\/)?[a-z1-9-]+\/)$/', $input['vw_fb_review']) === 0){
                 $this->errors['review'] = 'Review link does not match the specified format';
             }
         }

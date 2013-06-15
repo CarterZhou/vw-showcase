@@ -43,7 +43,7 @@ License: GPLv2
     function admin_vw_showcase_menu() {
 
         //create custom top-level menus
-        add_menu_page( 'Showcase Settings Page', 'Video Showcase', 'manage_showcase', 'vw-showcase.php', 'vw_showcase_settings_display_page', plugins_url('vw-showcase/images/wp-logo.png'));
+        add_menu_page( 'Showcase Settings Page', 'Video Showcase', 'manage_showcase', 'vw-showcase.php', 'vw_showcase_settings_display_page',plugins_url('',__FILE__).'/images/wp-logo.png');
         
         //create submenu items
         $page_hook_fastbreak_add = add_submenu_page( 'vw-showcase.php', 'fastBREAK-Add/Update', 'fastBREAK - Add/Update', 'manage_showcase', 'vw-fastbreak-admin.php', 'vw_fastbreak_admin_add' );
@@ -246,7 +246,7 @@ License: GPLv2
     ?>
         <li>
             <input type="radio" name="topic" value="<?php echo $id; ?>" id="<?php echo $name;?>">
-            <label for="<?php echo $name;s ?>" class="subject_normal active"><?php echo $name; ?></label>
+            <label for="<?php echo $name; ?>" class="subject_normal active"><?php echo $name; ?></label>
         </li>
     <?php
             }

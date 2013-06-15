@@ -10,7 +10,7 @@
             if($('#vw_fb_theme').val().trim() == ''){
                 err_message += 'Name of theme is empty\n';
             }
-            if(/[^a-z ]+/i.test($('#vw_fb_theme').val().trim())){
+            if(/[^a-z -]+/i.test($('#vw_fb_theme').val().trim())){
                 err_message += 'Name of theme does not match the specified format\n';
             }
             // Validate date
@@ -21,7 +21,7 @@
                 err_message += 'Date does not match the specified format\n';
             }
             // Validate review link
-            if($('#vw_fb_review').val().trim() != '' && !/^(http:\/\/vibewire\.org\/[a-z1-9-]+\/)$/.test($('#vw_fb_review').val().trim())){
+            if($('#vw_fb_review').val().trim() != '' && !/^(http:\/\/vibewire\.org\/(\d{4}\/\d{2}\/)?[a-z1-9-]+\/)$/.test($('#vw_fb_review').val().trim())){
                 err_message += 'Review link does not match the specified format\n';
             }
 

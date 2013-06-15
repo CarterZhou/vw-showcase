@@ -19,6 +19,10 @@ class Pagination{
 		}
 	}
 
+	function get_current_page(){
+		return $this->current_page;
+	}
+
 	function get_num_of_records(){
 		return $this->num_of_records;
 	}
@@ -32,9 +36,6 @@ class Pagination{
 	}
 	function get_records_per_page(){
  		return $this->records_per_page;
-	}
-	function show(){
-
 	}
 }
 ?>

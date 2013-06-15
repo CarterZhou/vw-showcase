@@ -5,23 +5,40 @@
     	$page_now = 1;
     	if(isset($_GET['paged'])){
     		$page_now = intval($_GET['paged']);
+    	}else if(isset($_POST['paged'])){
+    		$page_now = intval($_POST['paged']);
     	}
     	$manager->fastbreak_get_some($page_now);
+    	$link_params = admin_url('admin.php').'?page=vw-fastbreak-list-admin.php&paged=';
     }
 ?>
 <div class="wrap">
 	<h2><?php _e( 'fastBREAK Event List'); ?></h2>
-	<form method="get" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
+	<form method="post" action="<?php echo admin_url('admin.php').'?page=vw-fastbreak-list-admin.php';?>">
 		<div class='tablenav'>
-			<div class="tablenav-pages"><span class="displaying-num"><?php  _e($manager->pagination->get_num_of_records());?> events</span>
+			<div class="tablenav-pages"><span class="displaying-num"><?php echo ($manager->pagination->get_num_of_records());?> events</span>
 				<span class="pagination-links">
-					<a class="first-page <?php  if($page_now == 1){echo 'disabled';}?>" title="Go to the first page" href="<?php echo $_SERVER['REQUEST_URI']; ?>&paged=1">«</a>
-					<a class="prev-page <?php  if($page_now == 1){echo 'disabled';}?>" title="Go to the previous page" href="<?php echo $_SERVER['REQUEST_URI']; ?>">‹</a>
-					<span class="paging-input"><input class="current-page" title="Current page" type="text" name="paged" value="1" size="1"> of 
-					<span class="total-pages"><?php  _e($manager->pagination->get_pages());?> events</span>
+					<a class="first-page <?php  if($page_now == 1){echo 'disabled';}?>" title="Go to the first page" href="<?php echo $link_params.'1';?>">«</a>
+					<?php  
+						if($page_now>1){
+							$link = $link_params.($page_now-1);
+						}else{
+							$link = $link_params.'1';
+						}
+					?>
+					<a class="prev-page <?php  if($page_now == 1){echo 'disabled';}?>" title="Go to the previous page" href="<?php echo $link;?>">‹</a>
+					<span class="paging-input"><input class="current-page" title="Current page" type="text" name="paged" value="<?php  echo $page_now;?>" size="1"> of 
+					<span class="total-pages"><?php  echo ($manager->pagination->get_pages());?> pages</span>
 					</span>
-					<a class="next-page <?php  if($page_now == $manager->pagination->get_pages()){echo 'disabled';}?>" title="Go to the next page" href="<?php echo $_SERVER['REQUEST_URI']; ?>">›</a>
-					<a class="last-page <?php  if($page_now == $manager->pagination->get_pages()){echo 'disabled';}?>" title="Go to the last page" href="<?php echo $_SERVER['REQUEST_URI']; ?>&paged=<?php echo $manager->pagination->get_pages()?>">»</a>
+						<?php  
+						if($page_now < $manager->pagination->get_pages()){
+							$link = $link_params.($page_now+1);
+						}else{
+							$link = $link_params.$page_now;
+						}
+					?>
+					<a class="next-page <?php  if($page_now == $manager->pagination->get_pages()){echo 'disabled';}?>" title="Go to the next page" href="<?php echo $link; ?>">›</a>
+					<a class="last-page <?php  if($page_now == $manager->pagination->get_pages()){echo 'disabled';}?>" title="Go to the last page" href="<?php echo $link_params.$manager->pagination->get_pages();?>">»</a>
 				</span>
 			</div>
 		</div>
