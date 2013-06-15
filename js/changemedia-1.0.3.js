@@ -35,11 +35,7 @@ jQuery(document).ready(function($) {
                 setTimeout($.proxy(function(){
                 	$('#s_vid_sub').empty();
                 	$('#s_video_subject').css('border-bottom','2px black solid');
-                		if($('#s_vid_img').children().length === 0){
-                        $film = $(document.createElement('img'));
-                        $film.attr({src:'http://vibewire.org/wp-content/uploads/2013/01/film_video_picture_film_roll_media.png',width:'50px',height:'50px'});
-                        $film.appendTo('#s_vid_img');
-                       }
+            
 	                var subjectName =  $(this).next().text();
 	               	$subjectAnchor = $(document.createElement('a'));
 	               	$subjectAnchor
@@ -48,11 +44,12 @@ jQuery(document).ready(function($) {
 	               	.attr('href','#').appendTo('div#s_vid_sub');
 	               	$subjectAnchor.text(subjectName);
 		       
-		        	// Get form data and serialize it.
-		        	$form = $('#s_form_subject');
-					var data = $form.serialize();
+	        	 	var data = {
+	               		action : 'changemedia_videos',
+	               		topic_id : $(this).val()
+               		};
 			        // Fetch data.
-		        	$.post('http://vibewire.org/change-media-showcase/',data , function(response, textStatus, xhr) {
+		        	$.post(ajax_object.ajax_url,data , function(response, textStatus, xhr) {
 						$('.loading-overlay').fadeOut('fast',function(){$(this).remove()});
 						if($.isEmptyObject(response)===false){
 							var thumbnails = response['thumbnails'];
@@ -122,7 +119,7 @@ jQuery(document).ready(function($) {
 	$('.back2list a').live('click', function(event) {
 		event.preventDefault();
 		$that = $(this);
-		$('#s_cm_video').fadeOut(500,function(){
+		$('#s_cm_video').empty().fadeOut(500,function(){
 			$that.parent().remove();
 			$('div#s_cm_video_area').animate({height:loaded_height},800,function(){});
 			$('div.s_cm_info').fadeIn('fast');

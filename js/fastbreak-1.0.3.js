@@ -56,26 +56,25 @@ jQuery(document).ready(function($) {
                 setTimeout($.proxy(function(){
             	$('#s_vid_sub').empty();
             	$('#s_video_subject').css('border-bottom','2px black solid');
-            		if($('#s_vid_img').children().length === 0){
-                    $film = $(document.createElement('img'));
-                    $film.attr({src:'http://vibewire.org/wp-content/uploads/2013/01/film_video_picture_film_roll_media.png',width:'50px',height:'50px'});
-                    $film.appendTo('#s_vid_img');
-                   }
-                var subjectName =  $(this).val();
+            		
+                var subjectName =  $(this).attr('id');
                	$subjectAnchor = $(document.createElement('a'));
                	$subjectAnchor
                	.addClass('active')
                	.attr('id', 's_subject_a')
                	.attr('href','#').appendTo('div#s_vid_sub');
+               	$subjectAnchor.data('tid',$(this).val());
                	$subjectAnchor.text(subjectName.toUpperCase());
-               	$('div.s_speaker_name,div.idea_img,div.s_vid_content,div#s_review').empty();
+               	$('div.s_speaker_name,div.s_vid_content,div#s_review').empty();
                	$('<div>').addClass('loading_img').hide().appendTo($('div.s_vid_content')).fadeIn('fast');
 
-	        	// Get form data and serialize it.
-	        	$form = $('#s_form_subject');
-				var data = $form.serialize();
+               	var data = {
+               		action : 'fastbreak_speakers',
+               		theme_id : $(this).val()
+               	};
 		        // Fetch URLs of videos.
-	        	$.post('http://vibewire.org/fastbreak-showcase/',data , function(links, textStatus, xhr) {
+	        	$.post(ajax_object.ajax_url,data, function(links, textStatus, xhr) {
+
 					$('div.s_vid_content').empty();
 					if($.isEmptyObject(links)===false){
 						var reviewUrl = links['review_link'] === ''? '#' : links['review_link'];
@@ -91,12 +90,7 @@ jQuery(document).ready(function($) {
 								.attr('src',urls[index])
 								.attr('frameborder', '0')
 								.attr('allowfullscreen', 'true').hide();
-								$ideaImg = $(document.createElement('img'));
-								$ideaImg.attr({
-									width: '30px',
-									height: '30px',
-									src:'http://vibewire.org/wp-content/uploads/2013/01/BRIGHT_IDEAS_bulb_normal.jpg'
-								}).appendTo($(this).prev().children().first());
+								
 								$(this).prev().children().last().html("<p>"+speakers[index]+"</p>");
 								$video.appendTo(this).show();
 							}
@@ -104,7 +98,7 @@ jQuery(document).ready(function($) {
 						var topPosition = 70 + 270 * Math.ceil(urls.length/2);
 						$bottomLink = $(document.createElement('a'))
 						.attr('href', reviewUrl)
-						.attr('target','_blank').text('Read the review here');
+						.attr('target','_blank').text('Read the review');
 						$('#s_review').append($bottomLink).css('top', topPosition);
 					}else{
 						$(document.getElementsByClassName('s_vid_content')[0]).html("<p>Sorry, no videos were found.</p>");
@@ -118,20 +112,26 @@ jQuery(document).ready(function($) {
 	// Show some basic information when users hover on a particular topic text
 	$('#s_subject_a').live('mouseenter',function() {
       	if ($(this).hasClass('active')){
+
 			$(this).removeClass('active');
 	  		// Create a modal box
 	  		$detail = $(document.createElement('div'))
 						.hide()
 						.addClass('detail-box')
-						.appendTo('#s_wrapper');
+						.appendTo('body');
+			$me = $(this);
+			$detail.css({'top': $me.offset().top + 50 ,'left': $me.offset().left - 100});
 			$tip = $(document.createElement('div')).addClass('calloutUp');
 			$tip2 = $(document.createElement('div')).addClass('calloutUp2').appendTo($tip);
 			$tip.appendTo($detail);
 			// Add loading prompt
 			$loadingText = $(document.createElement('h2')).text('Loading...').appendTo($detail);
 			$detail.show();
-			var subject = $(this).text().toLowerCase();
-			$.post('http://vibewire.org/fastbreak-showcase/', {subject: subject}, function(data, textStatus, xhr) {
+			var data = {
+           		action : 'fastbreak_info',
+           		theme_id :	$(this).data('tid')
+           	};
+			$.post(ajax_object.ajax_url, data, function(data, textStatus, xhr) {
 				 var details = $.parseJSON(data);
 					if (!$.isEmptyObject(details)) {
 						$title = $(document.createElement('h1')).hide();

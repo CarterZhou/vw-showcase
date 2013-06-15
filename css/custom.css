@@ -1,0 +1,125 @@
+div.wrap div{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+div.wrap {
+	font-size: 15px;
+}
+
+.tablenav .tablenav-pages{
+	float: left;
+}
+
+.tablenav .tablenav-pages .displaying-num{
+	font-size: 18px;
+}
+
+span.required{
+	font-size: 18px;
+	color: red;
+	font-weight: bold;
+}
+
+span.vw_error {
+	display: block;
+	font-size: 15px;
+	color: red;
+	font-weight: bold;
+}
+
+hr	{
+	width: 70%;
+	margin-left: 0;
+}
+
+div.vw_loading {
+	display: none;
+	position: absolute;
+	height: auto;
+    border: 2px solid black;
+    background-color: #FFF;
+    z-index: 99;
+    font-size: 18px;
+}
+
+div.vw_loading p{
+	padding: 10px;
+}
+
+div#tutorial {
+	display: none;
+	position: absolute;
+	top:10px;
+	left:200px;	
+	height: auto;
+    padding: 20px;
+    border: 2px solid #000;
+    background-color: #FFF;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    -moz-box-shadow: 0 0 14px #123;
+    -webkit-box-shadow: 0 0 14px #123;
+    box-shadow: 0 0 14px #123;
+    z-index: 5;
+    font-size: 18px;
+}
+
+#close {
+    position:absolute;
+    top:-12px;
+    right:-12px;
+    z-index:50;
+}
+
+div#image {
+	position: relative;
+	width: 650px;
+	overflow: hidden;
+	margin: 10px;
+}
+
+div#desc {
+	position: relative;
+	margin: 10px;
+}
+
+div#steps {
+	display: inline-block;
+	width: 500px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+p#step2,p#step3{
+	display: none;
+}
+
+div#desc a {
+	display: inline-block;
+	width: 33px;
+	height: 54px;
+	overflow: hidden;
+}
+
+a#next img {
+	margin-left: -35px;
+}
+
+a.page {
+	text-decoration: none;
+}
+
+
+div.overlay {
+	display: none;		
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    z-index: 4;
+}
