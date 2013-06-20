@@ -54,6 +54,10 @@
             <span class="vw_error"><?php if(isset($manager->errors['review'])){echo 'Error : '.$manager->errors['review'];}?></span>
             <?php _e("Textual Review Link: " ); ?><input placeholder="http://" type="text" id="vw_fb_review" name="vw_fb_review" value="<?php echo $manager->user_input['vw_fb_review']; ?>" size="50"><?php _e(" example: http://vibewire.org/2012/07/fastbreak-lies-review/" ); ?> 
         </div>
+        <div>
+            <span class="vw_error"><?php if(isset($manager->errors['cover'])){echo 'Error : '.$manager->errors['cover'];}?></span>
+            <?php _e("Cover Photo Link: " ); ?><input placeholder="http://" type="text" id="vw_fb_cover" name="vw_fb_cover" value="<?php echo $manager->user_input['vw_fb_cover']; ?>" size="60"><?php _e(" example: http://vibewire.org/wp-content/uploads/2013/06/coverphoto_april.png" ); ?> 
+        </div>
         <p><?php _e("Intro: " ); ?></p>
         <div>
             <textarea name="vw_fb_intro" id="vw_fb_intro" cols="100" rows="5" placeholder="Type the introduction of theme here..."><?php echo $manager->user_input['vw_fb_intro']; ?></textarea>
@@ -66,7 +70,7 @@
                 if(isset($manager->user_input['vw_fb_speaker']) && sizeof($manager->user_input['vw_fb_speaker'])>0){
                     $loop_count = sizeof($manager->user_input['vw_fb_speaker']);
                 }else{
-                    $loop_count = 4;
+                    $loop_count = 5;
                 }
                 for ($i=0; $i < $loop_count; $i++) {
                 

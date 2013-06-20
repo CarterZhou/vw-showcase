@@ -25,6 +25,11 @@
                 err_message += 'Review link does not match the specified format\n';
             }
 
+            // Validate cover photo link
+            if($('#vw_fb_cover').val().trim() != '' && !/^(http:\/\/vibewire\.org\/wp-content\/uploads\/\d{4}\/\d{2}\/[a-zA-Z1-9-_]+\.(png|bmp|jpg|jpeg))$/.test($('#vw_fb_cover').val().trim())){
+                err_message += 'Cover photo link does not match the specified format\n';
+            }
+
             var speakers = $("input[name='vw_fb_speaker\\[\\]']");
             if(speakers.length == 0){
                 err_message += 'No information of speakers is provided.';

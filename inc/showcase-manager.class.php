@@ -63,7 +63,7 @@ class ShowcaseManager
             $t_fb_speakers = $wpdb->prefix."showcase_fb_speakers";
            
             $data = array();
-            $sql = "SELECT $t_fb.topic_id AS topic_id,`details_id`,`speaker`,`youtube_link`,`review_link`,`topic`,`intro`,`presented_date`
+            $sql = "SELECT $t_fb.topic_id AS topic_id,`cover_photo`,`details_id`,`speaker`,`youtube_link`,`review_link`,`topic`,`intro`,`presented_date`
                     FROM `$t_fb`,`$t_fb_speakers`
                     WHERE $t_fb.topic_id = $t_fb_speakers.topic_id AND $t_fb.topic_id=$id";
             $results = $wpdb->get_results($sql,ARRAY_A);
@@ -73,6 +73,7 @@ class ShowcaseManager
                 $data['vw_fb_review'] = $results[0]['review_link'];
                 $data['vw_fb_intro'] = $results[0]['intro'];
                 $data['vw_fb_date'] = $results[0]['presented_date'];
+                $data['vw_fb_cover'] = $results[0]['cover_photo'];
                 foreach ($results as $index => $value) {
                     $data['vw_fb_did'][$index] = $results[$index]['details_id'];
                     $data['vw_fb_link'][$index] = $results[$index]['youtube_link'];
@@ -95,7 +96,8 @@ class ShowcaseManager
                     'topic' => strtolower($_POST['vw_fb_theme']), 
                     'review_link' => $_POST['vw_fb_review'],
                     'intro' => $_POST['vw_fb_intro'],
-                    'presented_date'=> $_POST['vw_fb_date']
+                    'presented_date'=> $_POST['vw_fb_date'],
+                    'cover_photo'=> $_POST['vw_fb_cover']
                 );
         if($id == 0){
             $success = $wpdb->insert($table_fb,$values);
@@ -160,6 +162,12 @@ class ShowcaseManager
         if(isset($input['vw_fb_review']) && !empty($input['vw_fb_review'])){
             if(preg_match('/^(http:\/\/vibewire\.org\/(\d{4}\/\d{2}\/)?[a-z1-9-]+\/)$/', $input['vw_fb_review']) === 0){
                 $this->errors['review'] = 'Review link does not match the specified format';
+            }
+        }
+        // Validate cover photo link
+        if(isset($input['vw_fb_cover']) && !empty($input['vw_fb_cover'])){
+            if(preg_match('/^(http:\/\/vibewire\.org\/wp-content\/uploads\/\d{4}\/\d{2}\/[a-zA-Z1-9-_]+\.(png|bmp|jpg|jpeg))$/', $input['vw_fb_cover']) === 0){
+                $this->errors['cover'] = 'Cover photo link does not match the specified format';
             }
         }
         //Validate names of speakers
