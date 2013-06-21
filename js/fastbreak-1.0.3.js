@@ -10,15 +10,15 @@ jQuery(document).ready(function($) {
 
 	    $('div#ileLoader-523826').empty();
 
-	    $( '#s_menu > li > ul' ).click(function(e){
+	    $( '#vw_menu > li > ul' ).click(function(e){
 			e.stopPropagation();
 		});
 	 	// Set up collapsible list.
-		$('#s_menu > li:not(:first)').find('span').addClass('ui-icon-circle-triangle-s').end()
+		$('#vw_menu > li:not(:first)').find('span').addClass('ui-icon-circle-triangle-s').end()
 		.find('ul').hide();
-		$('#s_menu > li:first').find('span').addClass('ui-icon-circle-triangle-n');
+		$('#vw_menu > li:first').find('span').addClass('ui-icon-circle-triangle-n');
         // Fold / unfold items on a list.
-		$('#s_menu > li').click(function(){
+		$('#vw_menu > li').click(function(){
 			var imVisible = $(this).find('ul:first').is(':visible');
 			if(!imVisible){
 				 var $visibleUL = $(this).parent().find('> li ul:visible');
@@ -42,31 +42,31 @@ jQuery(document).ready(function($) {
         // Slide welcome text from right to left.
         setTimeout(function(){$('div#welcome').animate({left: '0px'},800);},1000);
         // Display associated videos when one radio button is clicked.
-		$('#s_menu > li > ul input:radio').click(function(event) {
+		$('#vw_menu > li > ul input:radio').click(function(event) {
 			if($(this).hasClass('active')) {
 				$(this).removeClass('active');
                 // Slide welcome text from left to right then remove welcome div.
                 $('div#welcome').animate({left: '730px'},500,function(){$(this).remove()});
                 // Increase video container height.
-                $('div#s_video_area').css('height','920px');
+                $('div#vw_video_area').css('height','920px');
                 // Show video container
-                $('div#s_video_container').css('display', 'block');
+                $('div#vw_video_container').css('display', 'block');
 
                 // Show subject name on top of videos
                 setTimeout($.proxy(function(){
-            	$('#s_vid_sub').empty();
-            	$('#s_video_subject').css('border-bottom','2px black solid');
+            	$('#vw_vid_sub').empty();
+            	$('#vw_video_subject').css('border-bottom','2px black solid');
             		
                 var subjectName =  $(this).attr('id');
-               	$subjectAnchor = $(document.createElement('a'));
+               	$subjectAnchor = $('<a>');
                	$subjectAnchor
                	.addClass('active')
-               	.attr('id', 's_subject_a')
-               	.attr('href','#').appendTo('div#s_vid_sub');
+               	.attr('id', 'vw_subject_a')
+               	.attr('href','#').appendTo('div#vw_vid_sub');
                	$subjectAnchor.data('tid',$(this).val());
                	$subjectAnchor.text(subjectName.toUpperCase());
-               	$('div.s_speaker_name,div.s_vid_content,div#s_review').empty();
-               	$('<div>').addClass('loading_img').hide().appendTo($('div.s_vid_content')).fadeIn('fast');
+               	$('div.vw_speaker_name,div.vw_vid_content,div#vw_review').empty();
+               	$('<div>').addClass('loading_img').hide().appendTo($('div.vw_vid_content')).fadeIn('fast');
 
                	var data = {
                		action : 'fastbreak_speakers',
@@ -75,14 +75,14 @@ jQuery(document).ready(function($) {
 		        // Fetch URLs of videos.
 	        	$.post(ajax_object.ajax_url,data, function(links, textStatus, xhr) {
 
-					$('div.s_vid_content').empty();
+					$('div.vw_vid_content').empty();
 					if($.isEmptyObject(links)===false){
 						var reviewUrl = links['review_link'] === ''? '#' : links['review_link'];
 						var urls = links['urls'];
 						var speakers = links['speakers'];
-		                document.getElementById('s_subject_a').href = reviewUrl ;
-						document.getElementById('s_subject_a').target = '_blank';
-						$('div.s_vid_content').each(function(index) {
+		                $('#vw_subject_a').attr('href', reviewUrl);
+						$('#vw_subject_a').attr('target', '_blank');
+						$('div.vw_vid_content').each(function(index) {
 							if(index < urls.length){
 								$video = $('<iframe />')
 								.attr('width','360')
@@ -99,9 +99,9 @@ jQuery(document).ready(function($) {
 						$bottomLink = $(document.createElement('a'))
 						.attr('href', reviewUrl)
 						.attr('target','_blank').text('Read the review');
-						$('#s_review').append($bottomLink).css('top', topPosition);
+						$('#vw_review').append($bottomLink).css('top', topPosition);
 					}else{
-						$(document.getElementsByClassName('s_vid_content')[0]).html("<p>Sorry, no videos were found.</p>");
+						$(document.getElementsByClassName('vw_vid_content')[0]).html("<p>Sorry, no videos were found.</p>");
 					}
 					$('input:radio').addClass('active');
 				},'json');
@@ -110,7 +110,7 @@ jQuery(document).ready(function($) {
 	});
 
 	// Show some basic information when users hover on a particular topic text
-	$('#s_subject_a').live('mouseenter',function() {
+	$('#vw_subject_a').live('mouseenter',function() {
       	if ($(this).hasClass('active')){
 
 			$(this).removeClass('active');
@@ -169,7 +169,7 @@ jQuery(document).ready(function($) {
 						 .append($presented_date.show())
 						 .append($p.show()).slideDown('800');
 					 }else{
-						$('#s_subject_a').addClass('active');
+						$('#vw_subject_a').addClass('active');
 						// If there is no review, give not-found prompt
 						$loadingText.text('No review.');
 					 }
@@ -192,6 +192,6 @@ jQuery(document).ready(function($) {
 		$('.detail-box').slideToggle('fast',function() {
 			$(this).remove();
 		});
-		$('#s_subject_a').addClass('active');
+		$('#vw_subject_a').addClass('active');
 	});
  });

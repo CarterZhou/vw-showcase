@@ -37,5 +37,6 @@ class Pagination{
 	function get_records_per_page(){
  		return $this->records_per_page;
 	}
+
 }
 ?>

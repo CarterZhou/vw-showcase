@@ -4,18 +4,18 @@
 
 /* Code added on 14/01/2013 by Hao Zhou -- START */
 
-div#s_wrapper {
+div#vw_wrapper {
 	width:940px;
 	margin-left:10px;
 	margin-right:10px;
 	background: white;
 }
 
-div.s_subject_item label {
+div.vw_subject_item label {
 	margin-bottom: 5px;
 }
 	
-div#s_sidebar {
+div#vw_sidebar {
 	background: none;
 	padding: 0;
 	margin-top:10px;
@@ -38,32 +38,32 @@ div#welcome p {
 	text-align:justify;
 }
 
-div.s_subject_item {
+div.vw_subject_item {
 	margin-left:10px;
 	margin-top:45px;
 }
 
-div.s_subject_item > label {
+div.vw_subject_item > label {
 	font-size:18px;
 }
 
-ul.s_subjects {
+ul.vw_subjects {
 	list-style: none;
 	padding:0px;
 }
 
-ul.s_subjects li input[type="radio"] {
+ul.vw_subjects li input[type="radio"] {
 	position: absolute;
 	left: -999px;
 }
 
-ul.s_subjects li label {
+ul.vw_subjects li label {
 	font-size:13px;
 	font-weight: normal;
 	display: inline;
 }
 
-ul.s_subjects li {
+ul.vw_subjects li {
 	float: none;
 	display: list-item;
 	width: auto;
@@ -82,18 +82,18 @@ ul.s_subjects li {
 	cursor: pointer;
 }
 
-ul.s_subjects li input[type="radio"]:checked + label{
+ul.vw_subjects li input[type="radio"]:checked + label{
 	background: url("http://vibewire.org/wp-content/uploads/2013/01/check.png") left no-repeat;
 	color:#2F94C8;
 	font-weight:bold;
 	cursor: pointer;
 }
 
-ul.s_subjects li input[type="radio"] {
+ul.vw_subjects li input[type="radio"] {
 	top: 0;
 }
 
-div#s_video_area {
+div#vw_video_area {
 	min-height: 500px;
 	width: 720px;
 	left: 15px;
@@ -103,7 +103,7 @@ div#s_video_area {
 	font-family: 'Open Sans',sans-serif;
 }
 
-div#s_video_subject {
+div#vw_video_subject {
 	left:0px;
 	top:0px;
 	height:50px;
@@ -113,30 +113,30 @@ div#s_video_subject {
 	border:0;
 }
 
-div#s_vid_img {
+div#vw_vid_img {
 	display:inline;
 }
 
-div#s_vid_sub {
+div#vw_vid_sub {
 	position:relative;
 	top:10px;
 	display:inline;
 }
 
-div.s_video {
+div.vw_video {
 	position: absolute;
 	font-size:15px;
 	font-weight:bold;
 }
 
-div.s_speaker {
+div.vw_speaker {
 	margin-bottom:0;
 }
 div.idea_img {
 	float:left;
 }
 
-div.s_vid_content{
+div.vw_vid_content{
 	position:relative;
 	top:-10px
 }
@@ -239,7 +239,7 @@ div.s_vid_content{
 /* Code added on 14/01/2013 by Hao Zhou -- END */
 
 /* Code added on 31/01/2013 by Hao Zhou -- START */
-.s_clearfix::after {
+.vw_clearfix::after {
         visibility: hidden;
         display: block;
         content: " ";
@@ -249,7 +249,7 @@ div.s_vid_content{
 /* Code added on 31/01/2013 by Hao Zhou -- END */
 
 /* Code added on 07/02/2013 by Hao Zhou -- START */
-div#s_review {
+div#vw_review {
 	position:absolute;
 	left:280px;
 	width:160px;
@@ -257,11 +257,11 @@ div#s_review {
 	font-weight:bold;
 }
 
-#s_menu {
+#vw_menu {
 	padding:0;
 }
 
-#s_menu > li {
+#vw_menu > li {
 	cursor:pointer;
 	font-weight:bold;
 	font-size:15px;
@@ -272,17 +272,17 @@ div#s_review {
 	margin-bottom:5px;
 }
 
-#s_menu >li > label {
+#vw_menu >li > label {
 	color:white;
 	padding-left:5px;
 }
 
-#s_menu > li > span {
+#vw_menu > li > span {
 	float:right;
 	display:inline-block;
 }
 
-#s_menu li li {
+#vw_menu li li {
         background-color:#fff;
        	background-image: none;
 }
@@ -291,7 +291,7 @@ div#s_review {
 
 /* Code added on 13/02/2013 by Hao Zhou -- START */
 
-div#s_cm_sidebar {
+div#vw_cm_sidebar {
 	background: none;
 	padding: 0;
 	margin:10px;
@@ -303,7 +303,7 @@ div#s_cm_sidebar {
 	font-family: 'Open Sans',sans-serif;
 }
 
-div#s_cm_video_area {
+div#vw_cm_video_area {
 	height: 600px;
 	width: 680px;
 	left: 15px;
@@ -313,14 +313,14 @@ div#s_cm_video_area {
 	font-family: 'Open Sans',sans-serif;
 }
 
-div.s_cm_info {
+div.vw_cm_info {
 	position: absolute;
 	font-size:14px;
 	width:680px;
 	height:200px;
 }
 
-div.s_cm_thumbnail {
+div.vw_cm_thumbnail {
 	border:2px solid grey;
 	border-radius: 4px;
 	position: relative;
@@ -328,7 +328,7 @@ div.s_cm_thumbnail {
 	width:320px;
 }
 
-.s_cm_thumbnail img {
+.vw_cm_thumbnail img {
     width: 100%;
     height: 100%;
     background-size: contain;
@@ -344,18 +344,18 @@ div.s_cm_thumbnail {
 	background:rgba(0,0,0,.5) url('http://vibewire.org/wp-content/uploads/2013/02/play_button.png') no-repeat center center;
 }
 
-.s_cm_intro {
+.vw_cm_intro {
 	font-size:16px;
 	display:inline-block;
 	position:absolute;
 	margin-left:20px;
 }
 
-.s_cm_intro p {
+.vw_cm_intro p {
 	margin:0;
 	margin-bottom:5px;
 }
-.s_cm_intro p a {
+.vw_cm_intro p a {
 	font-weight:bold;
 }
 
@@ -369,12 +369,12 @@ div.s_cm_thumbnail {
 	text-align:center;
 }
 
-div#s_video_container {
+div#vw_video_container {
 	height:100%;
 	display: none;
 }
 
-div#s_cm_video {
+div#vw_cm_video {
 	position: absolute;
 	top:70px;
 	left: 50px;

@@ -233,12 +233,12 @@ License: GPLv2
             "SELECT `topic_id`,`name` FROM `$tablename`";
             $results = $wpdb->get_results($sql,ARRAY_A);
     ?>
-        <div id="s_wrapper" class="clearfix">
-        <div id="s_cm_sidebar">
-        <div class="s_subject_item">
-        <ul id="s_menu">
+        <div id="vw_wrapper" class="clearfix">
+        <div id="vw_cm_sidebar">
+        <div class="vw_subject_item">
+        <ul id="vw_menu">
         <li><label>Change Media</label>
-            <ul class="s_subjects">
+            <ul class="vw_subjects">
     <?php
             foreach ($results as $index => $topic) {
                $name = $topic['name'];
@@ -256,7 +256,7 @@ License: GPLv2
         </ul>
     </div>
     </div>
-    <div id="s_cm_video_area">
+    <div id="vw_cm_video_area">
     <div id="welcome" style="left:730px;top:0px;width:680px;height:400px">
     <h1>Welcome to Change Media Showcase!</h1>
     <p>Vibewire exists to ensure that all young people are able to have their voices heard and to provide a platform for young people to participate in the BIG conversations. Each month, we'll be delving into these discussions in our ‘Conversations that Matter’ video series.</p>
@@ -264,9 +264,9 @@ License: GPLv2
     <p>Check out our past videos!</p>
     <p>Want us to tell your story? Email <a href="mailto:editor@vibewire.org">editor@vibewire.org</a></p>
     </div>
-    <div id="s_video_container">
-    <div id="s_video_subject"><div id="s_vid_sub"></div></div>
-    <div id="s_cm_video"></div>
+    <div id="vw_video_container">
+    <div id="vw_video_subject"><div id="vw_vid_sub"></div></div>
+    <div id="vw_cm_video"></div>
     </div>
     </div>
     </div>
@@ -285,10 +285,10 @@ License: GPLv2
             $results = $wpdb->get_results($sql,ARRAY_A);
             $year = "";
     ?>
-    <div id="s_wrapper" class="clearfix">
-        <div id="s_sidebar">
-            <div class="s_subject_item">
-            <ul id="s_menu">
+    <div id="vw_wrapper" class="clearfix">
+        <div id="vw_sidebar">
+            <div class="vw_subject_item">
+            <ul id="vw_menu">
     <?php
             foreach ($results as $index => $theme) {
                 $name = $theme['topic'];
@@ -300,7 +300,7 @@ License: GPLv2
                     $year = substr($theme['presented_date'], 0,4);
     ?>               
                      <li><label>fast<strong><em>BREAK</em></strong> <?php echo $year;?></label><span class="ui-icon"></span>          
-                     <ul class="s_subjects">
+                     <ul class="vw_subjects">
     <?php    
                 }
     ?>
@@ -317,7 +317,7 @@ License: GPLv2
         </ul>
         </div>
     </div>
-    <div id="s_video_area">
+    <div id="vw_video_area">
     <div id="welcome" style="left:730px;top:0px;width:700px;height:400px">
         <h1>Welcome to fastBREAK showcase!</h1>
         <p><em>Produced by</em> Vibewire and the Powerhouse Museum</p>
@@ -347,15 +347,15 @@ License: GPLv2
         </ul>
     </div>
     </div>
-    <div id="s_video_container" style="display:none">
-            <div id="s_video_subject"><div id="s_vid_sub"></div></div>
-            <div class="s_video" style="left:0px;top:70px;width:360px;height:260px;"><div class="s_speaker clearfix"><div class="s_speaker_name"></div></div><div class="s_vid_content"></div></div>
-            <div class="s_video" style="left:370px;top:70px;width:360px;height:260px;"><div class="s_speaker clearfix"><div class="s_speaker_name"></div></div><div class="s_vid_content"></div></div>
-            <div class="s_video" style="left:0px;top:340px;width:360px;height:260px;"><div class="s_speaker clearfix"><div class="s_speaker_name"></div></div><div class="s_vid_content"></div></div>
-            <div class="s_video" style="left:370px;top:340px;width:360px;height:260px;"><div class="s_speaker clearfix"><div class="s_speaker_name"></div></div><div class="s_vid_content"></div></div>
-            <div class="s_video" style="left:0px;top:610px;width:360px;height:260px;"><div class="s_speaker clearfix"><div class="s_speaker_name"></div></div><div class="s_vid_content"></div></div>
-            <div class="s_video" style="left:370px;top:610px;width:360px;height:260px;"><div class="s_speaker clearfix"><div class="s_speaker_name"></div></div><div class="s_vid_content"></div></div>
-            <div id="s_review"></div>
+    <div id="vw_video_container" style="display:none">
+            <div id="vw_video_subject"><div id="vw_vid_sub"></div></div>
+            <div class="vw_video" style="left:0px;top:70px;width:360px;height:260px;"><div class="vw_speaker clearfix"><div class="vw_speaker_name"></div></div><div class="vw_vid_content"></div></div>
+            <div class="vw_video" style="left:370px;top:70px;width:360px;height:260px;"><div class="vw_speaker clearfix"><div class="vw_speaker_name"></div></div><div class="vw_vid_content"></div></div>
+            <div class="vw_video" style="left:0px;top:340px;width:360px;height:260px;"><div class="vw_speaker clearfix"><div class="vw_speaker_name"></div></div><div class="vw_vid_content"></div></div>
+            <div class="vw_video" style="left:370px;top:340px;width:360px;height:260px;"><div class="vw_speaker clearfix"><div class="vw_speaker_name"></div></div><div class="vw_vid_content"></div></div>
+            <div class="vw_video" style="left:0px;top:610px;width:360px;height:260px;"><div class="vw_speaker clearfix"><div class="vw_speaker_name"></div></div><div class="vw_vid_content"></div></div>
+            <div class="vw_video" style="left:370px;top:610px;width:360px;height:260px;"><div class="vw_speaker clearfix"><div class="vw_speaker_name"></div></div><div class="vw_vid_content"></div></div>
+            <div id="vw_review"></div>
     </div>
     </div>
     <?php
