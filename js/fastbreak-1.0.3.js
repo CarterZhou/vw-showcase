@@ -48,24 +48,24 @@ jQuery(document).ready(function($) {
                 // Slide welcome text from left to right then remove welcome div.
                 $('div#welcome').animate({left: '730px'},500,function(){$(this).remove()});
                 // Increase video container height.
-                $('div#vw_video_area').css('height','920px');
-                // Show video container
+                
+                // Show video container.
                 $('div#vw_video_container').css('display', 'block');
 
-                // Show subject name on top of videos
+                // Show subject name on top of videos.
                 setTimeout($.proxy(function(){
-            	$('#vw_vid_sub').empty();
-            	$('#vw_video_subject').css('border-bottom','2px black solid');
+            	$('#vw_video_subject').empty().css('border-bottom','2px black solid');
             		
                 var subjectName =  $(this).attr('id');
                	$subjectAnchor = $('<a>');
                	$subjectAnchor
                	.addClass('active')
                	.attr('id', 'vw_subject_a')
-               	.attr('href','#').appendTo('div#vw_vid_sub');
+               	.attr('href','#').hide();
+               	$('#vw_video_subject').append($subjectAnchor).css('height', 50);
                	$subjectAnchor.data('tid',$(this).val());
                	$subjectAnchor.text(subjectName.toUpperCase());
-               	$('div.vw_speaker_name,div.vw_vid_content,div#vw_review').empty();
+               	$('div.vw_speaker,div.vw_vid_content,div#vw_review').empty();
                	$('<div>').addClass('loading_img').hide().appendTo($('div.vw_vid_content')).fadeIn('fast');
 
                	var data = {
@@ -73,15 +73,28 @@ jQuery(document).ready(function($) {
                		theme_id : $(this).val()
                	};
 		        // Fetch URLs of videos.
-	        	$.post(ajax_object.ajax_url,data, function(links, textStatus, xhr) {
+	        	$.post(ajax_object.ajax_url,data, function(response, textStatus, xhr) {
 
 					$('div.vw_vid_content').empty();
-					if($.isEmptyObject(links)===false){
-						var reviewUrl = links['review_link'] === ''? '#' : links['review_link'];
-						var urls = links['urls'];
-						var speakers = links['speakers'];
+					if($.isEmptyObject(response)===false){
+						$('div#vw_video_area').css('height',920);
+
+						var reviewUrl = response['review_link'] === ''? '#' : response['review_link'];
+						var urls = response['urls'];
+						var speakers = response['speakers'];
 		                $('#vw_subject_a').attr('href', reviewUrl);
 						$('#vw_subject_a').attr('target', '_blank');
+
+						if(response['cover_photo'] !== null){
+							$('#vw_subject_a').text('');
+							$('#vw_video_subject').css('height', 180);
+							$('div#vw_video_area').css('height',1050);
+							$("<img>").attr({
+								src: response['cover_photo'],
+								alt: subjectName.toUpperCase()
+							}).appendTo($('#vw_subject_a'));
+						}
+						$('#vw_subject_a').fadeIn('fast');
 						$('div.vw_vid_content').each(function(index) {
 							if(index < urls.length){
 								$video = $('<iframe />')
@@ -91,15 +104,16 @@ jQuery(document).ready(function($) {
 								.attr('frameborder', '0')
 								.attr('allowfullscreen', 'true').hide();
 								
-								$(this).prev().children().last().html("<p>"+speakers[index]+"</p>");
+								$(this).prev().text(speakers[index]);
 								$video.appendTo(this).show();
 							}
 						});
-						var topPosition = 70 + 270 * Math.ceil(urls.length/2);
-						$bottomLink = $(document.createElement('a'))
+						var height = 270 * Math.ceil(urls.length/2);
+						$('#vw_videos').css('height', height);
+						$bottomLink = $('<a>')
 						.attr('href', reviewUrl)
 						.attr('target','_blank').text('Read the review');
-						$('#vw_review').append($bottomLink).css('top', topPosition);
+						$('#vw_review').append($bottomLink).css('top', $('#vw_videos').offset().top + 70);
 					}else{
 						$(document.getElementsByClassName('vw_vid_content')[0]).html("<p>Sorry, no videos were found.</p>");
 					}
@@ -109,23 +123,24 @@ jQuery(document).ready(function($) {
 			}
 	});
 
-	// Show some basic information when users hover on a particular topic text
+	// Show some basic information when users hover on a particular topic text.
 	$('#vw_subject_a').live('mouseenter',function() {
       	if ($(this).hasClass('active')){
-
+      		$('.detail-box').data('entered', false);
 			$(this).removeClass('active');
-	  		// Create a modal box
-	  		$detail = $(document.createElement('div'))
+	  		// Create a detail box.
+	  		$detail = $('<div>')
 						.hide()
 						.addClass('detail-box')
 						.appendTo('body');
-			$me = $(this);
-			$detail.css({'top': $me.offset().top + 50 ,'left': $me.offset().left - 100});
-			$tip = $(document.createElement('div')).addClass('calloutUp');
-			$tip2 = $(document.createElement('div')).addClass('calloutUp2').appendTo($tip);
+			var $me = $(this);
+			var mid_position = 190 + parseInt($('#vw_video_subject').offset().left);
+			$detail.css({'top': $me.offset().top + 50 ,'left': mid_position});
+			$tip = $('<div>').addClass('calloutUp');
+			$tip2 = $('<div>').addClass('calloutUp2').appendTo($tip);
 			$tip.appendTo($detail);
-			// Add loading prompt
-			$loadingText = $(document.createElement('h2')).text('Loading...').appendTo($detail);
+			// Add loading prompt.
+			$loadingText = $('<h2>').text('Loading...').appendTo($detail);
 			$detail.show();
 			var data = {
            		action : 'fastbreak_info',
@@ -134,34 +149,34 @@ jQuery(document).ready(function($) {
 			$.post(ajax_object.ajax_url, data, function(data, textStatus, xhr) {
 				 var details = $.parseJSON(data);
 					if (!$.isEmptyObject(details)) {
-						$title = $(document.createElement('h1')).hide();
-						$speakers = $(document.createElement('h2')).hide();
-						$presented_date = $(document.createElement('h2')).hide();
-						$more = $(document.createElement('a')).addClass('more').text(" more on review...");
-						// Set title/topic
+						$title = $('<h1>').hide();
+						$speakers = $('<h2>').hide();
+						$presented_date = $('<h2>').hide();
+						$more = $('<a>').addClass('more').text(" more on review...");
+						// Set title/topic.
 					 	 $title.text(details.topic.toUpperCase());
-					 	 // Set speakers
+					 	 // Set speakers.
 					 	 var all_speakers = '<strong>Presented By: </strong>'
 					 	 for (var i = 0; i < details.speakers.length; i++) {
 					 	 	all_speakers += details.speakers[i]+' , '
 					 	 }
 					 	 all_speakers = all_speakers.substring(0,all_speakers.length-2);
 					 	 $speakers.html(all_speakers);
-					 	 // Set date
+					 	 // Set date.
 					 	 $presented_date.text(details.date);
-					 	 // Set review link
+					 	 // Set review link.
 						 if(details.review_link === ''){
 						 	$more.attr('href','#');
 						 }else{
 						 	$more.attr('href',details.review_link).attr('target','_blank');
 						 }
-					 	 // Set text introduction
+					 	 // Set text introduction.
 					 	 var intro = details.intro;
 					 	 intro = intro.replace(/\n/,'<br>');
 					 	 intro = intro.replace(/fastBREAK/g,'fast<strong><em>BREAK</em></strong>');
-					 	 $p = $(document.createElement('p')).hide();
+					 	 $p = $('<p>').hide();
 						 $p.html(intro).append($more.show()); 
-						// Attach to div and show
+						// Attach to div and show.
 						 $detail.empty()
 						 .append($tip)
 						 .append($title.show())
@@ -170,7 +185,7 @@ jQuery(document).ready(function($) {
 						 .append($p.show()).slideDown('800');
 					 }else{
 						$('#vw_subject_a').addClass('active');
-						// If there is no review, give not-found prompt
+						// If there is no review, give not-found prompt.
 						$loadingText.text('No review.');
 					 }
 				});
@@ -187,11 +202,28 @@ jQuery(document).ready(function($) {
           	$(this).removeClass("subject_hover");
 		}
 	);
-	// Remove modal box and overlay mouse leaves
+	// When the mouse enters the detail box, set Boolean 'entered' to true.
+	$(document).on('mouseenter','.detail-box',function(event) {
+		$(this).data('entered',true);
+	});
+	// When the mouse leaves from the detail box, remove the box and reset the Boolean flag.
 	$(document).on('mouseleave','.detail-box',function(event) {
 		$('.detail-box').slideToggle('fast',function() {
+			$(this).data('entered', false);
 			$(this).remove();
 		});
 		$('#vw_subject_a').addClass('active');
+	});
+	// Remove the detail box when mouse leaves from anchor and if the mouse has not entered the detail box before.
+	$(document).on('mouseleave','#vw_subject_a',function(event) {
+		setTimeout(function(){
+			var $me = $('.detail-box');
+			if($me.data('entered') !== true){
+				$me.slideToggle('fast',function() {
+					$me.remove();
+				});
+				$('#vw_subject_a').addClass('active');
+			}
+		},500);
 	});
  });

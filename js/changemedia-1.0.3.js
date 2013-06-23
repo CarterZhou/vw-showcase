@@ -37,7 +37,7 @@ jQuery(document).ready(function($) {
                 	$('#vw_video_subject').css('border-bottom','2px black solid');
             
 	                var subjectName =  $(this).next().text();
-	               	$subjectAnchor = $(document.createElement('a'));
+	               	$subjectAnchor = $('<a>');
 	               	$subjectAnchor
 	               	.addClass('active')
 	               	.attr('id', 'vw_subject_a')

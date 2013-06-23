@@ -150,13 +150,14 @@ License: GPLv2
         $id = intval($_POST['theme_id']);
         $data = array();
 
-        $sql = "SELECT `speaker`,`youtube_link`,`review_link`
+        $sql = "SELECT `speaker`,`youtube_link`,`review_link`,`cover_photo`
                 FROM `$t_fb`,`$t_fb_speakers`
                 WHERE $t_fb.topic_id = $t_fb_speakers.topic_id AND $t_fb.topic_id=$id"; 
 
         $results = $wpdb->get_results($sql,ARRAY_A);
         if($wpdb->num_rows){
             $data['review_link'] = $results[0]['review_link'];
+            $data['cover_photo'] = $results[0]['cover_photo'];
             foreach ($results as $index => $value) {
                 $data['urls'][$index] = $results[$index]['youtube_link'];
                 $data['speakers'][$index] = $results[$index]['speaker'];
@@ -318,7 +319,7 @@ License: GPLv2
         </div>
     </div>
     <div id="vw_video_area">
-    <div id="welcome" style="left:730px;top:0px;width:700px;height:400px">
+    <div id="welcome" style="left:730px;top:0px;width:700px;">
         <h1>Welcome to fastBREAK showcase!</h1>
         <p><em>Produced by</em> Vibewire and the Powerhouse Museum</p>
         <p>fast<strong><em>BREAK</strong></em> is a power breakfast of insights, innovation and inspiration - it’s food for thought.</p>
@@ -326,7 +327,7 @@ License: GPLv2
         <p>The fast<strong><em>BREAK</strong></em> program showcases a diverse range of fresh perspectives from within the creative industries, including technology, design, media, science and education. Following the five back-to-back talks, participants are invited to share ideas over a delicious breakfast by Black Star Pastry, Newtown.</p>
         <p>With a focus on intergenerational exchange and dialogue, fast<strong><em>BREAK</strong></em> is a unique opportunity for conversations outside the ordinary - an opportunity for emerging young masterminds from a range of disciplines to be heard at to brush shoulders with decision-makers from corporate and non-profit organisations. </p>
 
-    <div id="sponser_logo">
+    <div id="sponsor_logo">
     <div id="spon_title">Sponsored By: </div>
         <ul>
             <li>
@@ -348,13 +349,15 @@ License: GPLv2
     </div>
     </div>
     <div id="vw_video_container" style="display:none">
-            <div id="vw_video_subject"><div id="vw_vid_sub"></div></div>
-            <div class="vw_video" style="left:0px;top:70px;width:360px;height:260px;"><div class="vw_speaker clearfix"><div class="vw_speaker_name"></div></div><div class="vw_vid_content"></div></div>
-            <div class="vw_video" style="left:370px;top:70px;width:360px;height:260px;"><div class="vw_speaker clearfix"><div class="vw_speaker_name"></div></div><div class="vw_vid_content"></div></div>
-            <div class="vw_video" style="left:0px;top:340px;width:360px;height:260px;"><div class="vw_speaker clearfix"><div class="vw_speaker_name"></div></div><div class="vw_vid_content"></div></div>
-            <div class="vw_video" style="left:370px;top:340px;width:360px;height:260px;"><div class="vw_speaker clearfix"><div class="vw_speaker_name"></div></div><div class="vw_vid_content"></div></div>
-            <div class="vw_video" style="left:0px;top:610px;width:360px;height:260px;"><div class="vw_speaker clearfix"><div class="vw_speaker_name"></div></div><div class="vw_vid_content"></div></div>
-            <div class="vw_video" style="left:370px;top:610px;width:360px;height:260px;"><div class="vw_speaker clearfix"><div class="vw_speaker_name"></div></div><div class="vw_vid_content"></div></div>
+            <div id="vw_video_subject"></div>
+            <div id="vw_videos">
+            <div class="vw_video" style="left:0px;top:10px;"><div class="vw_speaker"></div><div class="vw_vid_content"></div></div>
+            <div class="vw_video" style="left:370px;top:10px;"><div class="vw_speaker"></div><div class="vw_vid_content"></div></div>
+            <div class="vw_video" style="left:0px;top:280px;"><div class="vw_speaker"></div><div class="vw_vid_content"></div></div>
+            <div class="vw_video" style="left:370px;top:280px;"><div class="vw_speaker"></div><div class="vw_vid_content"></div></div>
+            <div class="vw_video" style="left:0px;top:550px;"><div class="vw_speaker"></div><div class="vw_vid_content"></div></div>
+            <div class="vw_video" style="left:370px;top:550px"><div class="vw_speaker"></div><div class="vw_vid_content"></div></div>
+            </div>
             <div id="vw_review"></div>
     </div>
     </div>

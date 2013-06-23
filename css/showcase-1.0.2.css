@@ -99,7 +99,7 @@ div#vw_video_area {
 	left: 15px;
 	position: relative;
 	margin-top:10px;
-        overflow:hidden;
+    overflow:hidden;
 	font-family: 'Open Sans',sans-serif;
 }
 
@@ -113,17 +113,18 @@ div#vw_video_subject {
 	border:0;
 }
 
-div#vw_vid_img {
-	display:inline;
+a#vw_subject_a img {
+	width: 720px;
+	height: 180px;
 }
 
-div#vw_vid_sub {
-	position:relative;
-	top:10px;
-	display:inline;
+div#vw_videos {
+	position: relative;
 }
 
 div.vw_video {
+	width:360px;
+	height:260px;
 	position: absolute;
 	font-size:15px;
 	font-weight:bold;
@@ -132,13 +133,9 @@ div.vw_video {
 div.vw_speaker {
 	margin-bottom:0;
 }
-div.idea_img {
-	float:left;
-}
 
-div.vw_vid_content{
-	position:relative;
-	top:-10px
+div.vw_vid_content iframe{
+	margin-bottom: 0;
 }
 
 .loading_img {
@@ -250,11 +247,10 @@ div.vw_vid_content{
 
 /* Code added on 07/02/2013 by Hao Zhou -- START */
 div#vw_review {
-	position:absolute;
-	left:280px;
-	width:160px;
+	/*position:absolute;*/
 	font-size:16px;
 	font-weight:bold;
+	text-align: center;
 }
 
 #vw_menu {
@@ -398,14 +394,18 @@ div#vw_cm_video {
 
 /* Code added on 13/02/2013 by Hao Zhou -- END */
 
-#sponser_logo {
+#sponsor_logo {
 	margin-top: -7px;
 }
 
 #spon_title {
-	font-weight: bold;font-style: italic;font-size: 16px;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 16px;
 }
 
-#sponser_logo ul li {
+#sponsor_logo ul li {
+	display: inline;
+	list-style: none;
 	padding-right: 16px;
 }
