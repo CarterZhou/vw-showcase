@@ -87,8 +87,8 @@ jQuery(document).ready(function($) {
 
 						if(response['cover_photo'] !== null){
 							$('#vw_subject_a').text('');
-							$('#vw_video_subject').css('height', 180);
-							$('div#vw_video_area').css('height',1050);
+							$('#vw_video_subject').css('height', 267);
+							$('div#vw_video_area').css('height',1137);
 							$("<img>").attr({
 								src: response['cover_photo'],
 								alt: subjectName.toUpperCase()
@@ -100,7 +100,11 @@ jQuery(document).ready(function($) {
 								$video = $('<iframe />')
 								.attr('width','360')
 								.attr('height','220')
-								.attr('src',urls[index])
+								// In IE9, a div with z-index > 1 e.g. 9999 would not appear on top of
+								// iframes (in our case they contain Youtube videos) as expected.
+								// To work around that, we need to append query string 'wmode=transparent'
+								// at the end of source URL.
+								.attr('src',urls[index]+'?wmode=transparent')
 								.attr('frameborder', '0')
 								.attr('allowfullscreen', 'true').hide();
 								

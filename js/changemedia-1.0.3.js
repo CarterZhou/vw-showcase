@@ -65,7 +65,11 @@ jQuery(document).ready(function($) {
 								$info_div = $('<div/>').addClass('vw_cm_info').hide();
 								$thumbnail_div = $('<div/>').addClass('vw_cm_thumbnail').append($thumbnail).appendTo($info_div);
 								$intro_div = $('<div/>').addClass('vw_cm_intro').append($intro).appendTo($info_div);
-								$thumbnail_div.data('cmVideo', urls[index]);
+								// In IE9, a div with z-index > 1 e.g. 9999 would not appear on top of
+								// iframes (in our case they contain Youtube videos) as expected.
+								// To work around that, we need to append query string 'wmode=transparent'
+								// at the end of source URL.
+								$thumbnail_div.data('cmVideo', urls[index]+'?wmode=transparent');
 								$info_div.css('top', baseTop + margin);
 								$info_div.appendTo($('div#vw_video_container')).fadeIn('fast');
 								loaded_height = baseTop + margin + 270;

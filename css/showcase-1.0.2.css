@@ -111,11 +111,12 @@ div#vw_video_subject {
 	font-size: 30px;
 	font-weight:bold;
 	border:0;
+	padding-bottom:2px;
 }
 
 a#vw_subject_a img {
 	width: 720px;
-	height: 180px;
+	height:267px;
 }
 
 div#vw_videos {
@@ -172,7 +173,7 @@ div.vw_vid_content iframe{
     -moz-border-radius: 6px;
     -webkit-border-radius: 6px;
     border-radius: 6px;
-    z-index: 10;
+    z-index: 9999;
 }
 
 .calloutUp { 
