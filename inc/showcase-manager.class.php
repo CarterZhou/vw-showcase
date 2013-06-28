@@ -195,6 +195,22 @@ class ShowcaseManager
             }
         }
     }
+
+    function changemedia_validate(){
+
+    }
+
+    function changemedia_get_some(){
+
+    }
+
+    function changemedia_get_one(){
+
+    }
+
+    function changemedia_add_or_update(){
+
+    }
 }
 	
 ?>

@@ -31,41 +31,52 @@ License: GPLv2
 
     function showcase_admin_init(){
         $plugin_url = plugins_url('',__FILE__);
-        // Register jquery-ui script
+        // Register all scripts used by this plugin.
         wp_register_script( 'jquery-ui-script', $plugin_url.'/js/jquery-ui-1.10.3.custom.min.js');
         wp_register_script( 'fastbreak-admin-script', $plugin_url.'/js/admin/fastbreak-admin.js');
+        wp_register_script( 'changemedia-admin-script', $plugin_url.'/js/admin/changemedia-admin.js');
+
         wp_localize_script( 'fastbreak-admin-script', 'plugin_object',array('plugin_url' => plugins_url('',__FILE__)));
-        // Register jquery-ui style sheet
-        wp_register_style( 'jquery-ui-style', $plugin_url.'/css/ui-lightness/jquery-ui-1.10.3.custom.min.css');
+        wp_localize_script( 'changemedia-admin-script', 'plugin_object',array('plugin_url' => plugins_url('',__FILE__)));
+        // Register jquery-ui style sheet.
+        wp_register_style('jquery-ui-style', $plugin_url.'/css/ui-lightness/jquery-ui-1.10.3.custom.min.css');
         wp_register_style('custom-ui-style',$plugin_url.'/css/custom.css');
     }
 
     function admin_vw_showcase_menu() {
-
-        //create custom top-level menus
+        //Create custom top-level menus.
         add_menu_page( 'Showcase Settings Page', 'Video Showcase', 'manage_showcase', 'vw-showcase.php', 'vw_showcase_settings_display_page',plugins_url('',__FILE__).'/images/wp-logo.png');
         
-        //create submenu items
+        //Create submenu items.
         $page_hook_fastbreak_add = add_submenu_page( 'vw-showcase.php', 'fastBREAK-Add/Update', 'fastBREAK - Add/Update', 'manage_showcase', 'vw-fastbreak-admin.php', 'vw_fastbreak_admin_add' );
         $page_hook_fastbreak_list = add_submenu_page( 'vw-showcase.php', 'fastBREAK-List', 'fastBREAK - List', 'manage_showcase', 'vw-fastbreak-list-admin.php', 'vw_fastbreak_admin_list' );
-        $page_hook_changemedia_add =add_submenu_page( 'vw-showcase.php', 'Change Media-Add/Update', 'Change Media - Add/Update', 'manage_showcase', 'vw-changemedia-admin.php', 'vw_changemedia_admin' );
+        $page_hook_changemedia_list =add_submenu_page( 'vw-showcase.php', 'Change Media-List', 'Change Media - List', 'manage_showcase', 'vw-changemedia-list-admin.php', 'vw_changemedia_admin_list' );
+        $page_hook_changemedia_add =add_submenu_page( 'vw-showcase.php', 'Change Media-Add/Update', 'Change Media - Add/Update', 'manage_showcase', 'vw-changemedia-admin.php', 'vw_changemedia_admin_add' );
 
-        // Hook jquery-ui script to admin screens
-        add_action( 'admin_print_scripts-'.$page_hook_fastbreak_add,'showcase_admin_scripts' );
-        add_action( 'admin_print_scripts-'.$page_hook_changemedia_add,'showcase_admin_scripts' );
-        // Hook jquery-ui style sheet to admin screens
+        // Hook jquery-ui script to admin screens.
+        add_action( 'admin_print_scripts-'.$page_hook_fastbreak_add,'showcase_fb_admin_scripts' );
+        add_action( 'admin_print_scripts-'.$page_hook_changemedia_add,'showcase_cm_admin_scripts' );
+        // Hook jquery-ui style sheet to admin screens.
         add_action( 'admin_print_styles-' . $page_hook_fastbreak_add, 'showcase_admin_styles' );
         add_action( 'admin_print_styles-' . $page_hook_changemedia_add, 'showcase_admin_styles' );
         add_action( 'admin_print_styles-' . $page_hook_fastbreak_list, 'showcase_admin_styles' );
         
     }
 
-    function showcase_admin_scripts(){
+    function showcase_fb_admin_scripts(){
         //Link jquery-ui script to a page
         wp_enqueue_script('jquery-ui-script');
         wp_enqueue_script('jquery-ui-draggable');
         //Link fastbreak admin script to a page
         wp_enqueue_script('fastbreak-admin-script');
+    }
+
+     function showcase_cm_admin_scripts(){
+        //Link jquery-ui script to a page
+        wp_enqueue_script('jquery-ui-script');
+        wp_enqueue_script('jquery-ui-draggable');
+         //Link change media admin script to a page
+        wp_enqueue_script('changemedia-admin-script');
     }
 
      function showcase_admin_styles(){
@@ -94,7 +105,7 @@ License: GPLv2
 
     }
 
-    function vw_changemedia_admin(){
+    function vw_changemedia_admin_add(){
         include("vw-changemedia-admin.php");
     }
 
@@ -106,6 +117,10 @@ License: GPLv2
         include("vw-fastbreak-list-admin.php");
     }
 
+    function vw_changemedia_admin_list(){
+        include("vw-changemedia-list-admin.php");
+    }
+        
     function fastbreak_delete(){
         require_once(dirname(__FILE__).'/inc/showcase-manager.class.php');
         $manager = new ShowcaseManager();
@@ -171,14 +186,14 @@ License: GPLv2
     // Get all video links of a particular topic
     function changemedia_videos(){
         global $wpdb;
-        $t_fb = $wpdb->prefix."showcase_cm";
-        $t_fb_videos = $wpdb->prefix."showcase_cm_videos";
+        $t_cm = $wpdb->prefix."showcase_cm";
+        $t_cm_videos = $wpdb->prefix."showcase_cm_videos";
         $id = intval($_POST['topic_id']);
         $videos = array();
 
         $sql = "SELECT `thumbnail`,`intro`,`youtube_link`
-                FROM `$t_fb`,`$t_fb_videos`
-                WHERE $t_fb.topic_id = $t_fb_videos.topic_id AND $t_fb.topic_id=$id"; 
+                FROM `$t_cm`,`$t_cm_videos`
+                WHERE $t_cm.topic_id = $t_cm_videos.topic_id AND $t_cm.topic_id=$id"; 
 
         $results = $wpdb->get_results($sql,ARRAY_A);
         if($wpdb->num_rows){
@@ -226,6 +241,8 @@ License: GPLv2
 
 
     /* Build front end pages*/
+
+    // Build Change Media Showcase Page
     function wp_vw_changemedia($text){
          if(get_the_title() === 'Change Media Showcase'){
             global $wpdb;
@@ -277,6 +294,7 @@ License: GPLv2
         }
     }
 
+    // Build fastBREAK Showcase Page
     function wp_vw_fastbreak($text){
         if(get_the_title() === 'fastBREAK Showcase'){
             global $wpdb;
