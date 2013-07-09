@@ -1,7 +1,7 @@
 <?php
 /*
  * Author: Hao Zhou
- * Date: 23/01/2013 
+ * Date: 16/06/2013 
  *
  */
 class ShowcaseManager
@@ -79,6 +79,9 @@ class ShowcaseManager
                     $data['vw_fb_link'][$index] = $results[$index]['youtube_link'];
                     $data['vw_fb_speaker'][$index] = $results[$index]['speaker'];
                 }
+                // Convert escaped single/double quotes.
+                $data['vw_fb_intro'] = str_replace("\'", "'", $results[0]['intro']);
+                $data['vw_fb_intro'] = str_replace('\"', '"', $data['vw_fb_intro']);
             }
             $this->data = $data;
         }

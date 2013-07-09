@@ -1,7 +1,9 @@
 <?php 
-	/**
-	* 
-	*/
+/*
+ * Author: Hao Zhou
+ * Date: 16/06/2013 
+ *
+ */
 class Pagination{
 	
 	private $num_of_records;
