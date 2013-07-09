@@ -60,7 +60,7 @@
 			<tr>
 				<td><?php _e(strtoupper($manager->data[$i]['topic']));?></td>
 				<td><?php _e($manager->data[$i]['presented_date']);?></td>
-				<td><a href="<?php echo ($manager->data[$i]['review_link']);?>" title="Read the review"><?php echo ($manager->data[$i]['review_link']);?></a></td>
+				<td><a href="<?php echo ($manager->data[$i]['review_link']);?>" title="Check the link"><?php echo ($manager->data[$i]['review_link']);?></a></td>
 				<td><a href="<?php echo admin_url('admin.php').'?page=vw-fastbreak-admin.php&fb_id='.$manager->data[$i]['topic_id'];?>" title="Update">Update</a> | <a href="#" title="Delete">Delete</a></td>
 			</tr>
 			<?php 
