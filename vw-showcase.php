@@ -151,6 +151,9 @@ License: GPLv2
             foreach ($results as $index => $value) {
                 $info['speakers'][$index] = $results[$index]['speaker'];
             }
+            // Convert escaped single/double quotes.
+            $info['intro'] = str_replace("\'", "'", $results[0]['intro']);
+            $info['intro'] = str_replace('\"', '"',  $info['intro']);
         }
 
         echo json_encode($info);
@@ -201,6 +204,9 @@ License: GPLv2
                 $videos['thumbnails'][$index] = $results[$index]['thumbnail'];
                 $videos['urls'][$index] = $results[$index]['youtube_link'];
                 $videos['intros'][$index] = $results[$index]['intro'];
+                // Convert escaped single/double quotes.
+                $videos['intros'][$index] = str_replace("\'", "'", $results[$index]['intro']);
+                $videos['intros'][$index] = str_replace('\"', '"',  $videos['intros'][$index]);
             }
         }
 
